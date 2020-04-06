@@ -43,6 +43,13 @@ func() {
 
 echo -e "[+] Analyzing file: ${SSHCONF}\n"
 
+ACCRIGHTS=$(stat -c "%a" "$SSHCONF")
+if [ "$ACCRIGHTS" == "600" ]; then
+    echo -e "${RED}[-]${NC} File cannot be read!"
+    echo -e "${RED}[-]${NC} Try running again with sudo.\n"
+    exit 1
+fi
+
 for issue in "${ISSUES[@]}"; do
     echo "[+] Checking: ${issue}"
 
