@@ -26,8 +26,12 @@ NC="\033[0m"         # No Color
 #set -x
 
 archive() {
-    echo "[+] Archiving $1"
-    tar -rhf "$OUTFILE".tar "$1" 2>/dev/null
+    if [ -e "$1" ]; then
+        echo "[+] Archiving $1"
+        tar -rhf "$OUTFILE".tar "$1" 2>/dev/null
+    else
+        echo -e "${BLUE}[+]${NC} Skipping file $1..."
+    fi
 }
 
 echo "+----------------------------------------------------------+"
@@ -50,7 +54,7 @@ for dir in "${DIRS[@]}"; do
     if [ -d "$HOME"/"$dir" ]; then
         archive "$HOME"/"$dir"
     else
-        echo "[+] Skipping ~/""$dir""/ directory..."
+        echo -e "${BLUE}[+]${NC} Skipping ~/""$dir""/ directory..."
     fi
 done
 
@@ -59,15 +63,9 @@ echo
 echo "[+] Archiving ${#FILES[@]} files."
 for file in "${FILES[@]}"; do
     if [ "${file:0:1}" == "." ]; then
-        if [ -e "$HOME/$file" ]; then
-            archive "$HOME"/"$file"
-        fi
+        archive "$HOME"/"$file"
     elif [ "${file:0:1}" == "/" ]; then
-        if [ -e "$file" ]; then
-            archive "$file"
-        fi
-    else
-        echo "[+] Skipping file ""$file""..."
+        archive "$file"
     fi
 done
 
