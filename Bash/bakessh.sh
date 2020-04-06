@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
+# Checks OpenSSH config against a set of rules
+# author: carmelo.califano@gmail.com
+# history, date format ISO 8601:
+#  2020-04-06: First release
 
+# Settings, the items in ISSUES array match some of the properties in SSHCONF
 SSHCONF=/etc/ssh/sshd_config
 ISSUES=(Port PermitRootLogin UseDNS PasswordAuthentication PermitEmptyPasswords)
 

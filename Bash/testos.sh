@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+# Simple script to check + display OS version 
+# author: carmelo.califano@gmail.com
+# history, date format ISO 8601:
+#  2020-04-06: First issue
 # source: https://unix.stackexchange.com/questions/6345/how-can-i-get-distribution-name-and-version-number-in-a-simple-shell-script
 # also: https://unix.stackexchange.com/questions/432816/grab-id-of-os-from-etc-os-release
 
@@ -13,5 +17,5 @@ else
     ARCH=$(uname -m)
 fi
 
-echo "You're running $OS, version $VER on $ARCH."
+echo -e "You're running $OS, version $VER on $ARCH.\n"
 

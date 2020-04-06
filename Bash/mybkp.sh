@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Backs-up files to the backup directory
 # author: carmelo.califano@gmail.com
 # history, date format ISO 8601:
