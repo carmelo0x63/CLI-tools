@@ -10,7 +10,18 @@ HOSTNAME=$(hostname -s)
 DATE=$(date "+%Y%m%d")
 LABEL="xmonad"
 OUTFILE="$DESTDIR""/""$HOSTNAME""_""$LABEL""_bkp-""$DATE"
-FILES=(\.zshrc \.zsh_history \.vimrc \.screenrc \.sqliterc \.ghci \.xmobarrc \.xmonad/xmonad.hs \.Xresources \.vnc/xstartup /etc/ssh/sshd_config /usr/bin/vncserver)
+FILES=(aaabbcc \.zshrc \.zsh_history \.vimrc \.screenrc \.sqliterc \.ghci \.xmobarrc \.xmonad/xmonad.hs \.Xresources \.vnc/xstartup /etc/ssh/sshd_config /usr/bin/vncserver)
+DIRS=(scripts KVM)
+
+# Colors, ANSI escape codes
+# source: https://stackoverflow.com/questions/5947742/how-to-change-the-output-color-of-echo-in-linux
+RED="\033[0;31m"
+GREEN="\033[0;32m"
+ORANGE="\033[0;33m"
+BLUE="\033[0;34m"
+PURPLE="\033[0;35m"
+CYAN="\033[0;36m"
+NC="\033[0m"         # No Color
 
 #set -x
 
@@ -22,20 +33,30 @@ archive() {
 echo "+----------------------------------------------------------+"
 echo "| Backing up your personal files and settings"
 echo "| to the following destination: $OUTFILE.tgz"
-echo "| WARNING: any existing files with the same names will be"
+echo -e "| ${RED}WARNING${NC}: any existing files with the same names will be"
 echo "|          overwritten!"
 echo "|          (although that should be just fine)"
 echo -e "+----------------------------------------------------------+\n"
 
 if [ "$HOME" != "$PWD" ]; then
-    echo "[-] This command is best run from your HOME directory!"
+    echo -e "${RED}[-]${NC} This command is best run from your HOME directory!"
 fi
 
-echo "[+] Output file: $OUTFILE.tgz"
-echo "[+] Archiving ${#FILES[@]} elements."
-echo "[+] Archiving ~/scripts/ directory..."
-tar -cf "$OUTFILE".tar "$HOME"/scripts/ 2>/dev/null
+echo -e "[+] Creating empty output file: $OUTFILE.tar\n"
+tar -cf "$OUTFILE".tar -T /dev/null
 
+echo "[+] Archiving ${#DIRS[@]} directories."
+for dir in "${DIRS[@]}"; do
+    if [ -d "$HOME"/"$dir" ]; then
+        archive "$HOME"/"$dir"
+    else
+        echo "[+] Skipping ~/""$dir""/ directory..."
+    fi
+done
+
+echo
+
+echo "[+] Archiving ${#FILES[@]} files."
 for file in "${FILES[@]}"; do
     if [ "${file:0:1}" == "." ]; then
         if [ -e "$HOME/$file" ]; then
@@ -45,10 +66,12 @@ for file in "${FILES[@]}"; do
         if [ -e "$file" ]; then
             archive "$file"
         fi
+    else
+        echo "[+] Skipping file ""$file""..."
     fi
 done
 
-echo "[+] Compressing..."
+echo -e "\n[+] Compressing $OUTFILE.tar..."
 gzip "$OUTFILE".tar
 
 echo -e "[+] Backup complete!!!\n"
