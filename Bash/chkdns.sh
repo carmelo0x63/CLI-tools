@@ -23,6 +23,14 @@ usage() {
     echo -e "\tp: Ping (ICMP) the DNS servers\n"
 }
 
+testOK() {
+    echo -e "[+] $ipaddr:  \t"$1" ${GREEN}OK${NC}"
+}
+
+testNOK() {
+    echo -e "[+] $ipaddr:  \t"$1" ${RED}OK${NC}"
+}
+
 while getopts ":hdlp" opt; do
   case ${opt} in
     h ) # help
@@ -30,12 +38,13 @@ while getopts ":hdlp" opt; do
       exit 0
       ;;
     d ) # dig
+      echo "[+] DIG test started"
       for ipaddr in "${ALLHOSTS[@]}"; do
         dig @"$ipaddr" "$TESTRECORD" +short +time="$DNSTIMEOUT" &>/dev/null
         if [ "$?" -eq 0 ]; then
-          echo -e "[+] $ipaddr: dig\t${GREEN}OK${NC}"
+          testOK DIG
         else
-          echo -e "[-] $ipaddr: dig\t${RED}NOK${NC}"
+          testNOK DIG
         fi
       done
       exit 0
@@ -44,16 +53,23 @@ while getopts ":hdlp" opt; do
       for ipaddr in "${ALLHOSTS[@]}"; do
         echo "[+] $ipaddr"
       done
+      echo
       exit 0
       ;;
     p ) # ping
+      echo "[+] ICMP test started"
       for ipaddr in "${ALLHOSTS[@]}"; do
-        ping -c1 -W1 $ipaddr &>/dev/null && echo -e "[+] $ipaddr:\t${GREEN}OK${NC}" || echo -e "[-] $ipaddr:\t${RED}NOK${NC}"
+        ping -c1 -W1 $ipaddr &>/dev/null
+        if [ "$?" -eq 0 ]; then
+          testOK ICMP
+        else
+          testNOK ICMP
+        fi
       done
       exit 0
       ;;
     \? )
-      echo -e "${RED}[-]${NC} Invalid option"
+      echo -e "${RED}[-]${NC} Invalid option\n"
       usage
       exit 255
       ;;
