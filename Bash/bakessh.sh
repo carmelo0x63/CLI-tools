@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Checks OpenSSH config against a set of rules
-# author: carmelo.califano@gmail.com
+# author: Carmelo C
+# email: carmelo.califano@gmail.com
 # history, date format ISO 8601:
 #  2020-04-06: First release
 

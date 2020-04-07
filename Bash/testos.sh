@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Simple script to check + display OS version 
-# author: carmelo.califano@gmail.com
+# author: Carmelo C
+# email: carmelo.califano@gmail.com
 # history, date format ISO 8601:
 #  2020-04-06: First issue
 # source: https://unix.stackexchange.com/questions/6345/how-can-i-get-distribution-name-and-version-number-in-a-simple-shell-script

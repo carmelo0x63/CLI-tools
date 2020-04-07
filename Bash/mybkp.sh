@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Backs-up files to the backup directory
-# author: carmelo.califano@gmail.com
+# author: Carmelo C
+# email: carmelo.califano@gmail.com
 # history, date format ISO 8601:
 #  2020-04-06: Entirely rewritten by moving files -> array
 

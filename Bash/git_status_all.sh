@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Iterates through the local repositories, assumed to be under TARGETDIR
-# author: carmelo.califano@gmail.com
+# author: Carmelo C
+# email: carmelo.califano@gmail.com
 # history, date format ISO 8601:
 #  2020-04-06: First release
 
