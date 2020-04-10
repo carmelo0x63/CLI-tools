@@ -11,7 +11,7 @@ HOSTNAME=$(hostname -s)
 DATE=$(date "+%Y%m%d")
 LABEL="xmonad"
 OUTFILE="$DESTDIR""/""$HOSTNAME""_""$LABEL""_bkp-""$DATE"
-FILES=(\.zshrc \.zsh_history \.vimrc \.screenrc \.sqliterc \.ghci \.xmobarrc \.xmonad/xmonad.hs \.Xresources \.vnc/xstartup /etc/ssh/sshd_config /usr/bin/vncserver)
+FILES=(\.ghci \.gitconfig \.screenrc \.sqliterc \.vimrc \.xmobarrc \.Xresources \.zshrc \.zsh_history \.vnc/xstartup \.xmonad/xmonad.hs /etc/ssh/sshd_config /usr/bin/vncserver)
 DIRS=(scripts KVM)
 
 # Colors, ANSI escape codes
