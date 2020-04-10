@@ -45,7 +45,7 @@ func() {
 echo -e "[+] Analyzing file: ${SSHCONF}\n"
 
 ACCRIGHTS=$(stat -c "%a" "$SSHCONF")
-if [ "$ACCRIGHTS" == "600" ]; then
+if [ "$ACCRIGHTS" == "600" ] && [ $(id -u) != "0" ]; then
     echo -e "${RED}[-]${NC} File cannot be read!"
     echo -e "${RED}[-]${NC} Try running again with sudo.\n"
     exit 1
