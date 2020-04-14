@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # Scans a remote host to display all available common TLS ciphers
-# author: carmelo.califano@gmail.com
+# author: Carmelo C
+# email: carmelo.califano@gmail.com
 # history, date format ISO 8601:
 #  2020-04-05: 1.1 added argparse, quiet mode
 #  2020-01-03: 1.0 initial version

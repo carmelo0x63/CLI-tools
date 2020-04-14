@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # Variable-length random password generator
-# author: mellowizAThotmailDOTcom
+# author: Carmelo C
+# email: carmelo.califano@gmail.com
 # history, date format ISO 8601:
 #  2020-04-05 3.0 Refactored to Python3
 #  2017-01-17 2.4 added ability to remove some characters from the original strings

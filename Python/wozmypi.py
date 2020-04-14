@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 # Displays Raspberry Pi's revision and other board data
 # Source info: https://elinux.org/RPi_HardwareHistory
-# author: mellowizAThotmailDOTcom
+# author: Carmelo C
+# email: carmelo.califano@gmail.com
 # date (ISO 8601): 2020-03-01
 # history:
 #  2.0 added: CPU count, frequency
