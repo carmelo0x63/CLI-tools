@@ -1,5 +1,6 @@
 Python tools:
 - git_repos.py
+- rndpwgen.py
 - ssl_test_ciphers.py
 
 
@@ -17,6 +18,24 @@ optional arguments:
   -h, --help          show this help message and exit
   -q, --quiet         Quiet mode, displays on the repositories' names
   -v, --version       show program's version number and exit
+```
+
+```
+./rndpwgen.py -h
+usage: rndpwgen.py [-h] [-a] [-r REMOVE] [-s] [-v] <password length>
+
+Generate random password, version 3.0, build 20200403.
+
+positional arguments:
+  <password length>     Integer number, must be 3(!) or more
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -a, --alpha           alphanumeric only
+  -r REMOVE, --remove REMOVE
+                        list of characters to be skipped
+  -s, --safe            alphanumeric + "safe" special characters
+  -v, --version         show program's version number and exit
 ```
 
 ```
