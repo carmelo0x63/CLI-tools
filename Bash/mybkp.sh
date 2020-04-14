@@ -3,6 +3,7 @@
 # author: Carmelo C
 # email: carmelo.califano@gmail.com
 # history, date format ISO 8601:
+#  2020-04-14: Polished output, added more items to FILES and DIRS
 #  2020-04-06: Entirely rewritten by moving files -> array
 
 # Settings
@@ -11,8 +12,8 @@ HOSTNAME=$(hostname -s)
 DATE=$(date "+%Y%m%d")
 LABEL="xmonad"
 OUTFILE="$DESTDIR""/""$HOSTNAME""_""$LABEL""_bkp-""$DATE"
-FILES=(\.ghci \.gitconfig \.screenrc \.sqliterc \.vimrc \.xmobarrc \.Xresources \.zshrc \.zsh_history \.vnc/xstartup \.xmonad/xmonad.hs /etc/ssh/sshd_config /usr/bin/vncserver)
-DIRS=(scripts KVM)
+FILES=(\.zshrc \.zsh_history \.vimrc \.screenrc \.sqliterc \.ghci \.xmobarrc \.xmonad/xmonad.hs \.Xresources \.vnc/xstartup /etc/ssh/sshd_config /usr/bin/vncserver /etc/ansible/hosts /etc/ansible/ansible.cfg /etc/profile /etc/profile/colorls.sh)
+DIRS=(scripts KVM YAML)
 
 # Colors, ANSI escape codes
 # source: https://stackoverflow.com/questions/5947742/how-to-change-the-output-color-of-echo-in-linux
@@ -28,7 +29,7 @@ NC="\033[0m"         # No Color
 
 archive() {
     if [ -e "$1" ]; then
-        echo "[+] Archiving $1"
+        echo -e "${GREEN}[+]${NC} Archiving $1"
         tar -rhf "$OUTFILE".tar "$1" 2>/dev/null
     else
         echo -e "${BLUE}[+]${NC} Skipping file $1..."
@@ -37,9 +38,11 @@ archive() {
 
 echo "+----------------------------------------------------------+"
 echo "| Backing up your personal files and settings"
-echo "| to the following destination: $OUTFILE.tgz"
-echo -e "| ${RED}WARNING${NC}: any existing files with the same names will be"
-echo "|          overwritten!"
+#echo "| to the following destination: $OUTFILE.tgz"
+echo "| to the following destination:"
+echo -e "|\t\t$OUTFILE.tgz"
+echo -e "| ${RED}WARNING${NC}: any existing files with the same names will"
+echo "|          be overwritten!"
 echo "|          (although that should be just fine)"
 echo -e "+----------------------------------------------------------+\n"
 
@@ -50,7 +53,7 @@ fi
 echo -e "[+] Creating empty output file: $OUTFILE.tar\n"
 tar -cf "$OUTFILE".tar -T /dev/null
 
-echo "[+] Archiving ${#DIRS[@]} directories."
+echo "[+] Attempting to archive ${#DIRS[@]} directories."
 for dir in "${DIRS[@]}"; do
     if [ -d "$HOME"/"$dir" ]; then
         archive "$HOME"/"$dir"
@@ -61,7 +64,7 @@ done
 
 echo
 
-echo "[+] Archiving ${#FILES[@]} files."
+echo "[+] Attempting to archive ${#FILES[@]} files."
 for file in "${FILES[@]}"; do
     if [ "${file:0:1}" == "." ]; then
         archive "$HOME"/"$file"
@@ -75,9 +78,9 @@ gzip "$OUTFILE".tar
 
 echo -e "[+] Backup complete!!!\n"
 
-echo "+----------------------------------------------------------------------------+"
+echo "+--------------------------------------------------------------------+"
 echo "| Additionally you may want to:"
 echo "| 1. $ cd $DESTDIR"
-echo "| 2. $ scp $OUTFILE.tgz carmelo@employees.org:WWW/files/"
-echo -e "+----------------------------------------------------------------------------+\n"
+echo "| 2. $ scp $OUTFILE.tgz <user>@<server>:<path>"
+echo -e "+--------------------------------------------------------------------+\n"
 
