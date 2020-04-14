@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Small utility checking the status of DNS servers
-# checks include ICMP (ping) reachability and DNS responsiveness (dig)
+# Checks include ICMP (ping) reachability and DNS responsiveness (dig)
 # author: Carmelo C
 # email: carmelo.califano@gmail.com
 # history, date format ISO 8601:
