@@ -3,7 +3,8 @@
 # author: Carmelo C
 # email: carmelo.califano@gmail.com
 # history, date format ISO 8601:
-#  2020-04-14: Polished output, added more items to FILES and DIRS
+#  2020-04-14: Polished output, added more items to FILES
+#              (also split on multpiple lines) and DIRS
 #  2020-04-06: Entirely rewritten by moving files -> array
 
 # Settings
@@ -12,7 +13,12 @@ HOSTNAME=$(hostname -s)
 DATE=$(date "+%Y%m%d")
 LABEL="xmonad"
 OUTFILE="$DESTDIR""/""$HOSTNAME""_""$LABEL""_bkp-""$DATE"
-FILES=(\.zshrc \.zsh_history \.vimrc \.screenrc \.sqliterc \.ghci \.xmobarrc \.xmonad/xmonad.hs \.Xresources \.vnc/xstartup /etc/ssh/sshd_config /usr/bin/vncserver /etc/ansible/hosts /etc/ansible/ansible.cfg /etc/profile /etc/profile/colorls.sh)
+# Individual files, full path
+FILES=(\.zshrc \.zsh_history \.vimrc \.screenrc \.sqliterc
+  \.ghci \.xmobarrc \.xmonad/xmonad.hs \.Xresources \.vnc/xstartup
+  /etc/ssh/sshd_config /usr/bin/vncserver /etc/ansible/hosts
+  /etc/ansible/ansible.cfg /etc/profile /etc/profile/colorls.sh)
+# Directories, relative to $HOME
 DIRS=(scripts KVM YAML)
 
 # Colors, ANSI escape codes
