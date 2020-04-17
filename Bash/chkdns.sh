@@ -1,14 +1,16 @@
 #!/usr/bin/env bash
-# Small utility checking the status of DNS servers
+# Small utility checking the status of remote hosts
 # Checks include ICMP (ping) reachability and DNS responsiveness (dig)
 # author: Carmelo C
 # email: carmelo.califano@gmail.com
 # history, date format ISO 8601:
-#  2020-04-17: Added check for the existence of dig, unified test functions
+#  2020-04-17: Added check for the existence of dig, unified test functions,
+#              moved the list of IPs to a positional argument
 #  2020-04-07: First issue
 
-ALLHOSTS=(10.0.2.1 10.0.2.2 1.1.1.1 8.8.4.4 8.8.8.8 208.67.220.220 208.67.222.222)
-TESTRECORD="www.corriere.it"
+set -f   # disable glob
+IFS=","  # split on commas
+TESTRECORD="www.example.org"
 DNSTIMEOUT="1"
 DIGCMD="/usr/bin/dig"
 
@@ -18,23 +20,22 @@ GREEN="\033[0;32m"
 NC="\033[0m"         # No Color
 
 usage() {
-    echo "Usage: ${0##*/} [-h] [-l] [-p] [-d]"
-    echo -e "\th: Help"
-    echo -e "\tl: List available hosts"
-    echo -e "\tp: Ping (ICMP) the DNS servers"
-    echo -e "\td: Test port 53 by sending one sample query to hosts\n"
+    echo "Usage: ${0##*/} [option] [comma-separated IPs]"
+    echo -e "\t-h: Help"
+    echo -e "\t-p [comma-separated IPs]: Ping (ICMP) the targets from [list of IPs]"
+    echo -e "\t-d [comma-separated IPs]: Test port 53 by sending one sample query to [list of IPs]\n"
 }
 
-# testOut: $1=0|1, $2=test_name
+# testOut: $1=0=OK|1=NOK, $2=test_name
 testOut() {
     if [ "$1" = "0" ]; then
-      echo -e "${GREEN}[+]${NC} $ipaddr:  \t"$2" ${GREEN}OK${NC}"
+      echo -e "${GREEN}[+]${NC} $ipaddr:  \t"$2" ${GREEN}OK${NC}" | column -t
     else
-      echo -e "${RED}[-]${NC} $ipaddr:  \t"$2" ${RED}NOK${NC}"
+      echo -e "${RED}[-]${NC} $ipaddr:  \t"$2" ${RED}NOK${NC}" | column -t
     fi
 }
 
-while getopts ":hdlp" opt; do
+while getopts ":hd:lp:" opt; do
   case ${opt} in
     h ) # help
       usage
@@ -42,6 +43,7 @@ while getopts ":hdlp" opt; do
       ;;
     d ) # dig
       echo "[+] DIG test started"
+      ALLHOSTS=($OPTARG)
       if [ -e "${DIGCMD}" ]; then
         for ipaddr in "${ALLHOSTS[@]}"; do
           "${DIGCMD}" @"$ipaddr" "$TESTRECORD" +short +time="$DNSTIMEOUT" &>/dev/null
@@ -56,15 +58,9 @@ while getopts ":hdlp" opt; do
       fi
       exit 0
       ;;
-    l ) # list
-      for ipaddr in "${ALLHOSTS[@]}"; do
-        echo "[+] $ipaddr"
-      done
-      echo
-      exit 0
-      ;;
     p ) # ping
       echo "[+] ICMP test started"
+      ALLHOSTS=($OPTARG)
       for ipaddr in "${ALLHOSTS[@]}"; do
         ping -c1 -W1 $ipaddr &>/dev/null
         if [ "$?" -eq 0 ]; then
