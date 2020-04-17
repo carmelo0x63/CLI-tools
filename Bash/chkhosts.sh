@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Small utility checking the status of remote hosts
-# Checks include ICMP (ping) reachability and DNS responsiveness (dig)
+# Checks include ICMP (ping) reachability, DNS responsiveness (dig),
+# availability of SSH
 # author: Carmelo C
 # email: carmelo.califano@gmail.com
 # history, date format ISO 8601:
@@ -11,8 +12,11 @@
 set -f   # disable glob
 IFS=","  # split on commas
 TESTRECORD="www.example.org"
-DNSTIMEOUT="1"
+TIMEOUT="1"
 DIGCMD="/usr/bin/dig"
+PINGCMD="/bin/ping"
+NCCMD="/bin/nc"
+SSHPORT="22"
 
 # ANSI colors
 RED="\033[0;31m"
@@ -22,8 +26,9 @@ NC="\033[0m"         # No Color
 usage() {
     echo "Usage: ${0##*/} [option] [comma-separated IPs]"
     echo -e "\t-h: Help"
-    echo -e "\t-p [comma-separated IPs]: Ping (ICMP) the targets from [list of IPs]"
-    echo -e "\t-d [comma-separated IPs]: Test port 53 by sending one sample query to [list of IPs]\n"
+    echo -e "\t-p [comma-separated IPs]: Ping (ICMP) the targets hosts"
+    echo -e "\t-d [comma-separated IPs]: Test port 53 by sending one sample query"
+    echo -e "\t-s [comma-separated IPs]: Test port 22 by means of nc/netcat\n"
 }
 
 # testOut: $1=0=OK|1=NOK, $2=test_name
@@ -35,7 +40,7 @@ testOut() {
     fi
 }
 
-while getopts ":hd:lp:" opt; do
+while getopts ":hd:lp:s:" opt; do
   case ${opt} in
     h ) # help
       usage
@@ -46,7 +51,7 @@ while getopts ":hd:lp:" opt; do
       ALLHOSTS=($OPTARG)
       if [ -e "${DIGCMD}" ]; then
         for ipaddr in "${ALLHOSTS[@]}"; do
-          "${DIGCMD}" @"$ipaddr" "$TESTRECORD" +short +time="$DNSTIMEOUT" &>/dev/null
+          "${DIGCMD}" @"$ipaddr" "$TESTRECORD" +short +time="$TIMEOUT" &>/dev/null
           if [ "$?" -eq 0 ]; then
             testOut 0 DIG
           else
@@ -62,13 +67,30 @@ while getopts ":hd:lp:" opt; do
       echo "[+] ICMP test started"
       ALLHOSTS=($OPTARG)
       for ipaddr in "${ALLHOSTS[@]}"; do
-        ping -c1 -W1 $ipaddr &>/dev/null
+        "${PINGCMD}" -c1 -W1 $ipaddr &>/dev/null
         if [ "$?" -eq 0 ]; then
           testOut 0 ICMP
         else
           testOut 1 ICMP
         fi
       done
+      exit 0
+      ;;
+    s ) # nc/netcat/ssh
+      echo "[+] SSH test started, port: "${SSHPORT}
+      ALLHOSTS=($OPTARG)
+      if [ -e "${NCCMD}" ]; then
+        for ipaddr in "${ALLHOSTS[@]}"; do
+          output=$("$NCCMD" -w"$TIMEOUT" "$ipaddr" "$SSHPORT" 2>/dev/null)
+          if [ "${output:0:3}" = "SSH" ]; then
+            testOut 0 SSH
+          else
+            testOut 1 SSH
+          fi
+        done
+      else
+        echo -e "${RED}[-]${NC} ${NCCMD} not available, skipping.\n"
+      fi
       exit 0
       ;;
     \? )
