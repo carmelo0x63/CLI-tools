@@ -5,6 +5,7 @@
 # email: carmelo.califano@gmail.com
 # date (ISO 8601): 2020-03-01
 # history:
+#  2.1 ????
 #  2.0 added: CPU count, frequency
 #  1.2 replaced split with rstrip, moved to Python 3
 #  1.1 added argparse module and functionalities
@@ -17,8 +18,8 @@ import subprocess                      # spawn new processes, connect to their i
 import sys                             # system-specific parameters and functions
 
 # Global settings
-__version__ = 2.0
-__build__ = 20200414
+__version__ = 2.1
+__build__ = 20200418
 
 PiFlavours = [{'revision':'Beta','date':'Q1 2012','model':'B (Beta)','pcb':'?','mem':'256 MB','notes':'Beta Board'},
 {'revision':'0002','date':'Q1 2012','model':'B','pcb':'1.0','mem':'256 MB','notes':''},
