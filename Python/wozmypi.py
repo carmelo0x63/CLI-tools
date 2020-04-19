@@ -65,6 +65,7 @@ def checkFlav():
         myflav = subprocess.check_output(["awk","/^Revision/ {sub(\"^1000\", \"\", $3); print $3}","/proc/cpuinfo"]).decode().rstrip()
     except:
         print('[-] An exception occurred')
+        sys.exit(20)
 
     # Searches in PiFlavours (list of dictionaries) for the corresponding record
     for piflav in PiFlavours:
@@ -82,7 +83,7 @@ def checkSpecs():
     return dict(zip(piCpus, piMhzs))
 
 def main():
-    parser = argparse.ArgumentParser(description='Search and find revision number, release date, model, PCB revision, RAM size..., version ' + __version__ + ', build ' + __build__ + '.')
+    parser = argparse.ArgumentParser(description='Search and find Raspberry Pi\'s revision number, release date, model, PCB revision, RAM size..., version ' + __version__ + ', build ' + __build__ + '.')
     parser.add_argument('-s', '--short', action='store_true', help='display output in short format: revision, date, model, PCB')
     parser.add_argument('-l', '--long', action='store_true', help='extended info: CPU count, CPU frequency')
     parser.add_argument('-v', '--version', action='version', version='%(prog)s {version}'.format(version=__version__))
