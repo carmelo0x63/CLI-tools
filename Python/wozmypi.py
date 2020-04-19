@@ -3,8 +3,8 @@
 # Source info: https://elinux.org/RPi_HardwareHistory
 # author: Carmelo C
 # email: carmelo.califano@gmail.com
-# date (ISO 8601): 2020-03-01
 # history:
+#  2.1 Added: try/except to handle running on non-Linux platforms
 #  2.0 added: CPU count, frequency
 #  1.2 replaced split with rstrip, moved to Python 3
 #  1.1 added argparse module and functionalities
@@ -17,8 +17,8 @@ import subprocess                      # spawn new processes, connect to their i
 import sys                             # system-specific parameters and functions
 
 # Global settings
-__version__ = 2.0
-__build__ = 20200414
+__version__ = '2.1'
+__build__ = '20200419'
 
 PiFlavours = [{'revision':'Beta','date':'Q1 2012','model':'B (Beta)','pcb':'?','mem':'256 MB','notes':'Beta Board'},
 {'revision':'0002','date':'Q1 2012','model':'B','pcb':'1.0','mem':'256 MB','notes':''},
@@ -61,13 +61,15 @@ PiFlavours = [{'revision':'Beta','date':'Q1 2012','model':'B (Beta)','pcb':'?','
 
 def checkFlav():
     # Parses /proc/cpuinfo to get "Revision" number
-    myflav = subprocess.check_output(["awk","/^Revision/ {sub(\"^1000\", \"\", $3); print $3}","/proc/cpuinfo"]).decode().rstrip()
+    try:
+        myflav = subprocess.check_output(["awk","/^Revision/ {sub(\"^1000\", \"\", $3); print $3}","/proc/cpuinfo"]).decode().rstrip()
+    except:
+        print('[-] An exception occurred')
 
     # Searches in PiFlavours (list of dictionaries) for the corresponding record
     for piflav in PiFlavours:
         if piflav['revision'] == myflav:
             return(piflav)
-#            print(piflav)
 
 def checkSpecs():
     # Parses CPU count, MHz
@@ -80,7 +82,8 @@ def checkSpecs():
     return dict(zip(piCpus, piMhzs))
 
 def main():
-    parser = argparse.ArgumentParser(description='Search and find revision number, release date, model, PCB revision, RAM size..., version {version}, build {build}.'.format(version=__version__, build=__build__))
+    parser = argparse.ArgumentParser(description='Search and find revision number, release date, model, PCB revision, RAM size..., version ' + __version__ + ', build ' + __build__ + '.')
+    parser.add_argument('-s', '--short', action='store_true', help='display output in short format: revision, date, model, PCB')
     parser.add_argument('-l', '--long', action='store_true', help='extended info: CPU count, CPU frequency')
     parser.add_argument('-v', '--version', action='version', version='%(prog)s {version}'.format(version=__version__))
 
@@ -88,11 +91,21 @@ def main():
 
     # In case of no arguments shows information from the main list
     if len(sys.argv) == 1:
-        print(checkFlav())
+        parser.print_help()
+        sys.exit(1)
+
+    if args.short:
+        d1 = checkFlav()
+        if d1 is None:
+            print('[-] Search returned ' + str(d1))
+            sys.exit(10)
         sys.exit(0)
 
     if args.long:
         d1 = checkFlav()
+        if d1 is None:
+            print('[-] Search returned ' + str(d1))
+            sys.exit(10)
         d2 = checkSpecs()
         print({**d1, **d2})
         sys.exit(0)
