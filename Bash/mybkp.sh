@@ -19,7 +19,7 @@ FILES=(\.zshrc \.zsh_history \.vimrc \.screenrc \.sqliterc
   /etc/ssh/sshd_config /usr/bin/vncserver /etc/ansible/hosts
   /etc/ansible/ansible.cfg /etc/profile /etc/profile/colorls.sh)
 # Directories, relative to $HOME
-DIRS=(scripts KVM YAML)
+DIRS=(scripts KVM YAML HCL)
 
 # Colors, ANSI escape codes
 # source: https://stackoverflow.com/questions/5947742/how-to-change-the-output-color-of-echo-in-linux
