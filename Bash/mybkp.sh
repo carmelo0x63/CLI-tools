@@ -12,7 +12,7 @@ DESTDIR="/tmp"
 HOSTNAME=$(hostname -s)
 DATE=$(date "+%Y%m%d")
 LABEL="xmonad"
-OUTFILE="$DESTDIR""/""$HOSTNAME""_""$LABEL""_bkp-""$DATE"
+OUTFILE="$DESTDIR""/""$HOSTNAME""_""$USER""_""$LABEL""_bkp-""$DATE"
 # Individual files, full path
 FILES=(\.zshrc \.zsh_history \.vimrc \.screenrc \.sqliterc
   \.ghci \.xmobarrc \.xmonad/xmonad.hs \.Xresources \.vnc/xstartup
