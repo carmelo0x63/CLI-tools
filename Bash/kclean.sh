@@ -18,7 +18,7 @@ purge() {
     OLDKERNELS=$(dpkg -l | awk '{print $2}' | grep -E $LINUXPKG  | grep -vE $METALINUXPKG | grep -v $CURKERNEL)
     echo -e "\n[+] The following packages will be removed: $OLDKERNELS"
 
-#    sudo apt purge $OLDKERNELS
+    sudo apt purge $OLDKERNELS
     echo "[+] Done!"
 }
 
