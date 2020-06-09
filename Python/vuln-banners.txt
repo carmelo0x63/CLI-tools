@@ -1,0 +1,3 @@
+3Com 3CDaemon FTP Server Version 2.0
+Ability Server 2.34
+SSH-1.99-Cisco-1.25
