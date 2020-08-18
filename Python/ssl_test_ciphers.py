@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 # Scans a remote host to display all available common TLS ciphers
-# author: carmelo.califano@gmail.com
+# author: Carmelo C
+# email: carmelo.califano@gmail.com
 # history, date format ISO 8601:
-#  2020-04-03: 2.0 moved to Python3, polished a few quirks
-#  2016-10-14: 1.0 initial version
+#   2020-04-03: 2.0 moved to Python3, polished a few quirks
+#   2016-10-14: 1.0 initial version
 # Ported to Python from http://superuser.com/questions/109213/how-do-i-list-the-ssl-tls-cipher-suites-a-particular-website-offers
 
 

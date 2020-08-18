@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # description: Calculating Collatz conjecture convergence
-# author: mellowizAThotmailDOTcom
+# author: Carmelo C
+# email: carmelo.califano@gmail.com
 # date (ISO 8601): 2017-11-13
 # source: https://en.wikipedia.org/wiki/Collatz_conjecture
 

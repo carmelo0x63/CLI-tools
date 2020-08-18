@@ -3,7 +3,8 @@
 #              Inspired by: http://blog.stephenwolfram.com/2016/05/solomon-golomb-19322016/
 #              Info: https://en.wikipedia.org/wiki/Linear-feedback_shift_register
 #              Colored print: http://stackoverflow.com/questions/287871/print-in-terminal-with-colors-using-python
-# author: mellowizAThotmailDOTcom
+# author: Carmelo C
+# email: carmelo.califano@gmail.com
 # date (ISO 8601): 2016-06-01
 
 # Import some modules
