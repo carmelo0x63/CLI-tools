@@ -10,12 +10,12 @@ import argparse, requests, sys
 
 # Version number
 __version__ = "1.1"
-__build__ = "20200405"
+__build__ = "20200907"
 
 def main():
     parser = argparse.ArgumentParser(description='Queries GitHub API returning any repositories owned by <GitHub user name>, version ' + __version__ + ', build ' + __build__ + '.')
     parser.add_argument('username', metavar='<GitHub user name>', type=str)
-    parser.add_argument('-q', '--quiet', action='store_true', help='Quiet mode, displays on the repositories\' names')
+    parser.add_argument('-q', '--quiet', action='store_true', help='Quiet mode, displays only the repositories\' names')
     parser.add_argument('-v', '--version', action='version', version='%(prog)s ' + __version__)
 
     # In case of no arguments print help message then exits
