@@ -11,7 +11,6 @@
 GETGOURL="https://golang.org"
 SWDEPOT="$HOME/Downloads"
 GOPATH="/usr/local/go"
-#CLIRC=(.bashrc .zshrc)
 
 # First off, we check for an existing go binary on the system
 if [ -d "$GOPATH" ]; then
@@ -28,7 +27,7 @@ echo "[+] Fetching the latest version of Go/Golang from $GETGOURL"
 gofile="$(curl -s "$GETGOURL"/dl/ | grep -oP 'go([0-9\.]+)\.linux-amd64\.tar\.gz' | head -n1)"
 gourl="$GETGOURL/dl/$gofile"
 lastver=$(echo "$gofile" | grep -oP "([0-9\.]+)" | head -n1 | cut -d"." -f1-3)
-echo "[+] Found archive $gofile, v. $lastver"
+echo "[+] Golang.org: found archive $gofile, v. $lastver"
 
 if [ "$gocurrver" == "$lastver" ]; then
     echo "[+] You are up-to-date"
@@ -53,17 +52,16 @@ if [ -e "$SWDEPOT/$gofile" ]; then
 else
     echo "[+] Downloading..."
     (cd "$SWDEPOT"; curl -LO --progress-bar $gourl)
-#    curl -LO --progress-bar $gourl
-#    cd -
 fi
 
 # The actual installation/upgrade process starts here
+if [ "$(id -u)" != "0" ]; then
+    echo "[!] .. sudo credentials are required"
+    sudo -v
+fi
+
 if [ -d "$GOPATH" ]; then
     echo "[!] Removing previous installation..."
-    if [ "$(id -u)" != "0" ]; then
-        echo "[!] .. sudo credentials are requested"
-        sudo -v
-    fi
     sudo rm -rf "$GOPATH"
 fi
 
@@ -72,18 +70,8 @@ sudo tar -xzf "$SWDEPOT/go$lastver".linux-amd64.tar.gz -C /usr/local/
 echo "[+] You're now running Go v. $lastver"
 
 # Checking the shell's environment is set up correctly
-#for shellrc in "${CLIRC[@]}"; do
-#    if [ -e "$HOME/$shellrc" ]; then
-#        grep "/usr/local/go/bin" "$HOME/$shellrc" &>/dev/null
-#        if [ "$?" != "0" ]; then
-#            echo "[!] Please, make sure you $shellrc contains the following:"
-#            echo "[!] export PATH=$PATH:/usr/local/go/bin"
-#        fi
-#    fi
-#done
-
 if [ "$(echo $PATH | grep -oP '/usr/local/go/bin')" != "/usr/local/go/bin" ]; then
-    echo "[!] Please, make sure your environment contains the following:"
-    echo "[!] export PATH=$PATH:/usr/local/go/bin"
+    echo "[!] Please, make sure your environment contains something such as:"
+    echo -e "[!] export PATH=\$PATH:/usr/local/go/bin"
 fi
 
