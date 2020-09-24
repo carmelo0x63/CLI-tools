@@ -15,7 +15,7 @@ GOPATH="/usr/local/go"
 # First off, we check for an existing go binary on the system
 if [ -d "$GOPATH" ]; then
 #    gocurrver="$(cat /usr/local/go/VERSION)"
-    gocurrver="$($GOPATH/bin/go version | grep -oP "([0-9\.]+)" | cut -d"." -f1-3 | head -n1)"
+    gocurrver="$($GOPATH/bin/go version | grep -oP "([0-9\\.]+)" | cut -d"." -f1-3 | head -n1)"
     echo "[+] Your current Go/Golang version is $gocurrver"
 else
     echo "[!] It looks as if you don't have a Go binary on your system"
@@ -24,9 +24,9 @@ fi
 # We get the latest file name by scraping the download page with curl/grep/head
 # Along the process we build the version string and full download URL
 echo "[+] Fetching the latest version of Go/Golang from $GETGOURL"
-gofile="$(curl -s "$GETGOURL"/dl/ | grep -oP 'go([0-9\.]+)\.linux-amd64\.tar\.gz' | head -n1)"
+gofile="$(curl -s "$GETGOURL"/dl/ | grep -oP 'go([0-9\\.]+)\.linux-amd64\.tar\.gz' | head -n1)"
 gourl="$GETGOURL/dl/$gofile"
-lastver=$(echo "$gofile" | grep -oP "([0-9\.]+)" | head -n1 | cut -d"." -f1-3)
+lastver=$(echo "$gofile" | grep -oP "([0-9\\.]+)" | head -n1 | cut -d"." -f1-3)
 echo "[+] Golang.org: found archive $gofile, v. $lastver"
 
 if [ "$gocurrver" == "$lastver" ]; then
@@ -70,7 +70,7 @@ sudo tar -xzf "$SWDEPOT/go$lastver".linux-amd64.tar.gz -C /usr/local/
 echo "[+] You're now running Go v. $lastver"
 
 # Checking the shell's environment is set up correctly
-if [ "$(echo $PATH | grep -oP '/usr/local/go/bin')" != "/usr/local/go/bin" ]; then
+if [ "$(echo "$PATH" | grep -oP '/usr/local/go/bin')" != "/usr/local/go/bin" ]; then
     echo "[!] Please, make sure your environment contains something such as:"
     echo -e "[!] export PATH=\$PATH:/usr/local/go/bin"
 fi
