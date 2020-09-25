@@ -3,15 +3,22 @@
 # author: Carmelo C
 # email: carmelo.califano@gmail.com
 # history, date format ISO 8601:
-#  2020-09-25: Added platform check: amd64, arm64
+#  2020-09-25: Added platform check: Mac/Linux, amd64, arm64
 #  2020-09-24: First release
 
-# Settings
+# Setup
 #set -Eeuo pipefail
 #set -x
 GETGOURL="https://golang.org"
 SWDEPOT="$HOME/Downloads"
 GOPATH="/usr/local/go"
+
+if [ "$(uname -s)" == "Linux" ]; then
+    OS="linux"
+elif [ "$(uname -s)" == "Darwin" ]; then
+    OS="darwin"
+fi
+
 if [ "$(uname -m)" == "x86_64" ]; then
     ARCH="amd64"
 elif [ "$(uname -m)" == "aarch64" ]; then
@@ -30,7 +37,7 @@ fi
 # We get the latest file name by scraping the download page with curl/grep/head
 # Along the process we build the version string and full download URL
 echo "[+] Fetching the latest version of Go/Golang from $GETGOURL"
-gofile="$(curl -s "$GETGOURL"/dl/ | grep -oP "go([0-9\\.]+)\\.linux-$ARCH\\.tar\\.gz" | head -n1)"
+gofile="$(curl -s "$GETGOURL"/dl/ | grep -oP "go([0-9\\.]+)\\.$OS-$ARCH\\.tar\\.gz" | head -n1)"
 gourl="$GETGOURL/dl/$gofile"
 lastver=$(echo "$gofile" | grep -oP "([0-9\\.]+)" | head -n1 | cut -d"." -f1-3)
 echo "[+] Golang.org: found archive $gofile, v. $lastver"
@@ -72,7 +79,7 @@ if [ -d "$GOPATH" ]; then
 fi
 
 echo "[+] Installing Go/Golang v. $lastver"
-sudo tar -xzf "$SWDEPOT/go$lastver".linux-$ARCH.tar.gz -C /usr/local/
+sudo tar -xzf "$SWDEPOT/go$lastver".$OS-$ARCH.tar.gz -C /usr/local/
 echo "[+] You're now running Go v. $lastver"
 
 # Checking the shell's environment is set up correctly
