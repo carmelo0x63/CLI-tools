@@ -3,7 +3,7 @@
 # author: Carmelo C
 # email: carmelo.califano@gmail.com
 # history, date format ISO 8601:
-#  2020-09-24: First release
+#  2020-09-25: First release
 
 # Settings
 #set -Eeuo pipefail
@@ -56,7 +56,7 @@ fi
 
 # The actual installation/upgrade process starts here
 if [ "$(id -u)" != "0" ]; then
-    echo "[!] .. sudo credentials are required"
+    echo "[!] sudo credentials are required..."
     sudo -v
 fi
 
