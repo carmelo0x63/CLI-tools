@@ -8,4 +8,4 @@ diffexact :
 	for FILE in $$(ls *py); do diff $${FILE} ~/scripts/$${FILE}; done ;\
 
 install :
-	install *py ~/scripts/
+	cp -u *py ~/scripts/
