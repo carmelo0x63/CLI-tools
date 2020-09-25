@@ -1,5 +1,5 @@
 help :
-	@echo "Available commands:\n\tdiff\n\tdiffexact\n\tinstall\n"
+	@echo "Available commands:\n\tdiff\n\tdiffexact\n\tinstall\n\tinstallmacos\n"
 
 diff :
 	for FILE in $$(ls *sh); do diff -q $${FILE} ~/scripts/$${FILE}; done ;\
@@ -9,3 +9,6 @@ diffexact :
 
 install :
 	cp -u *sh ~/scripts/
+
+installmacos :
+	install *sh ~/scripts/

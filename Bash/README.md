@@ -19,6 +19,8 @@ Backs-up files to the backup directory
 Simple script to check + display OS version
 
 `get_golang.sh`:
+Script to automate the installation of Go on various platforms: Linux/Macos, Intel/AMD, ARM
+**NOTE**: on macos, the script depends on the presence of GNU `grep`
 - case first install:
 ```
 [!] It looks as if you don't have a Go binary on your system

@@ -12,23 +12,29 @@
 GETGOURL="https://golang.org"
 SWDEPOT="$HOME/Downloads"
 GOPATH="/usr/local/go"
-
+# Global variable "OS" is set to match the operating system
 if [ "$(uname -s)" == "Linux" ]; then
     OS="linux"
 elif [ "$(uname -s)" == "Darwin" ]; then
     OS="darwin"
 fi
-
+# Global variable "ARCH" is set to match the hardware architecture
 if [ "$(uname -m)" == "x86_64" ]; then
     ARCH="amd64"
 elif [ "$(uname -m)" == "aarch64" ]; then
     ARCH="arm64"
 fi
+# Setup ends
+
+echo "[+] Target platform is $OS on $ARCH"
 
 # First off, we check for an existing go binary on the system
 if [ -d "$GOPATH" ]; then
-#    gocurrver="$(cat /usr/local/go/VERSION)"
-    gocurrver="$($GOPATH/bin/go version | grep -oP "([0-9\\.]+)" | cut -d"." -f1-3 | head -n1)"
+    if [ "$OS" == "linux" ]; then
+        gocurrver="$($GOPATH/bin/go version | grep -oP "([0-9\\.]+)" | cut -d"." -f1-3 | head -n1)"
+    else
+        gocurrver="$($GOPATH/bin/go version | ggrep -oP "([0-9\\.]+)" | cut -d"." -f1-3 | head -n1)"
+    fi
     echo "[+] Your current Go/Golang version is $gocurrver"
 else
     echo "[!] It looks as if you don't have a Go binary on your system"
@@ -37,9 +43,15 @@ fi
 # We get the latest file name by scraping the download page with curl/grep/head
 # Along the process we build the version string and full download URL
 echo "[+] Fetching the latest version of Go/Golang from $GETGOURL"
-gofile="$(curl -s "$GETGOURL"/dl/ | grep -oP "go([0-9\\.]+)\\.$OS-$ARCH\\.tar\\.gz" | head -n1)"
-gourl="$GETGOURL/dl/$gofile"
-lastver=$(echo "$gofile" | grep -oP "([0-9\\.]+)" | head -n1 | cut -d"." -f1-3)
+if [ "$OS" == "linux" ]; then
+    gofile="$(curl -s "$GETGOURL"/dl/ | grep -oP "go([0-9\\.]+)\\.$OS-$ARCH\\.tar\\.gz" | head -n1)"
+    gourl="$GETGOURL/dl/$gofile"
+    lastver=$(echo "$gofile" | grep -oP "([0-9\\.]+)" | head -n1 | cut -d"." -f1-3)
+else
+    gofile="$(curl -s "$GETGOURL"/dl/ | ggrep -oP "go([0-9\\.]+)\\.$OS-$ARCH\\.tar\\.gz" | head -n1)"
+    gourl="$GETGOURL/dl/$gofile"
+    lastver=$(echo "$gofile" | ggrep -oP "([0-9\\.]+)" | head -n1 | cut -d"." -f1-3)
+fi
 echo "[+] Golang.org: found archive $gofile, v. $lastver"
 
 if [ "$gocurrver" == "$lastver" ]; then
@@ -53,17 +65,17 @@ fi
 
 # The following lines check whether the destination directory exists
 if [ -d "$SWDEPOT" ]; then
-    echo "[+] $SWDEPOT exists, storing archive locally"
+    echo "[+] Storage \"$SWDEPOT\" exists, saving local copy"
 else
-    echo "[+] $SWDEPOT does not exist, creating directory"
+    echo "[+] Storage \"$SWDEPOT\" does not exist, creating directory"
     echo "mkdir $SWDEPOT"
 fi
 
 # Likewise, no need to re-download the archive if it's already present
 if [ -e "$SWDEPOT/$gofile" ]; then
-    echo "[+] File $gofile already exists"
+    echo "[+] Archive $gofile already exists"
 else
-    echo "[+] Downloading..."
+    echo "[+] Downloading $gofile from $GETGOURL..."
     (cd "$SWDEPOT"; curl -LO --progress-bar $gourl)
 fi
 
@@ -83,8 +95,15 @@ sudo tar -xzf "$SWDEPOT/go$lastver".$OS-$ARCH.tar.gz -C /usr/local/
 echo "[+] You're now running Go v. $lastver"
 
 # Checking the shell's environment is set up correctly
-if [ "$(echo "$PATH" | grep -oP '/usr/local/go/bin')" != "/usr/local/go/bin" ]; then
-    echo "[!] Please, make sure your environment contains something such as:"
-    echo -e "[!] export PATH=\$PATH:/usr/local/go/bin"
+if [ "$OS" == "linux" ]; then
+    if [ "$(echo "$PATH" | grep -oP '/usr/local/go/bin')" != "/usr/local/go/bin" ]; then
+        echo "[!] Please, make sure your environment contains something such as:"
+        echo -e "[!] export PATH=\$PATH:/usr/local/go/bin"
+    fi
+else
+    if [ "$(echo "$PATH" | ggrep -oP '/usr/local/go/bin')" != "/usr/local/go/bin" ]; then
+        echo "[!] Please, make sure your environment contains something such as:"
+        echo -e "[!] export PATH=\$PATH:/usr/local/go/bin"
+    fi
 fi
 
