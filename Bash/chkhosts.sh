@@ -40,7 +40,7 @@ testOut() {
     fi
 }
 
-while getopts ":hd:lp:s:" opt; do
+while getopts ":hd:p:s:" opt; do
   case ${opt} in
     h ) # help
       usage
