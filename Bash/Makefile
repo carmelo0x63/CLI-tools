@@ -8,4 +8,4 @@ diffexact :
 	for FILE in $$(ls *sh); do diff $${FILE} ~/scripts/$${FILE}; done ;\
 
 install :
-	install *sh ~/scripts/
+	cp -u *sh ~/scripts/
