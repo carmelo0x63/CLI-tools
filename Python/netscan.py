@@ -34,7 +34,7 @@ def main():
     target = sys.argv[1]
     try:
         ipaddress.ip_address(target)
-    except ValueError:
+    except ValueError as e:
         print('Error: ' + str(e))
         sys.exit(20)  # ERROR: input is not an IP address
 
