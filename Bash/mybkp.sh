@@ -14,12 +14,15 @@ DATE=$(date "+%Y%m%d")
 LABEL="xmonad"
 OUTFILE="$DESTDIR""/""$HOSTNAME""_""$USER""_""$LABEL""_bkp-""$DATE"
 # Individual files, full path
-FILES=(\.zshrc \.zsh_history \.vimrc \.screenrc \.sqliterc
-  \.ghci \.xmobarrc \.xmonad/xmonad.hs \.Xresources \.vnc/xstartup
-  /etc/ssh/sshd_config /usr/bin/vncserver /etc/ansible/hosts
-  /etc/ansible/ansible.cfg /etc/profile /etc/profile/colorls.sh)
+FILES=(\.zshrc \.zsh_history
+    \.bashrc \.profile \.bash_history
+    \.vimrc \.screenrc \.sqliterc
+    \.ghci \.xmobarrc \.xmonad/xmonad.hs
+    \.Xresources \.vnc/xstartup /usr/bin/vncserver
+    /etc/ssh/sshd_config /etc/profile /etc/profile/colorls.sh
+    /etc/ansible/ansible.cfg /etc/ansible/hosts/etc/profile)
 # Directories, relative to $HOME
-DIRS=(scripts KVM YAML HCL)
+DIRS=(scripts \.oh-my-zsh KVM YAML HCL)
 
 # Colors, ANSI escape codes
 # source: https://stackoverflow.com/questions/5947742/how-to-change-the-output-color-of-echo-in-linux
