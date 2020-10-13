@@ -82,7 +82,7 @@ for file in "${FILES[@]}"; do
     fi
 done
 
-echo -e "\n[+] Compressing $OUTFILE.tar..."
+echo -e "\n[+] Compressing $OUTFILE.tar.gz ..."
 gzip "$OUTFILE".tar
 
 echo -e "[+] Backup complete!!!\n"
@@ -90,6 +90,6 @@ echo -e "[+] Backup complete!!!\n"
 echo "+--------------------------------------------------------------------+"
 echo "| Additionally you may want to:"
 echo "| 1. $ cd $DESTDIR"
-echo "| 2. $ scp $OUTFILE.tgz <user>@<server>:<path>"
+echo "| 2. $ scp $OUTFILE.tar.gz <user>@<server>:<path>"
 echo -e "+--------------------------------------------------------------------+\n"
 
