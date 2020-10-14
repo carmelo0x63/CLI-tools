@@ -47,9 +47,8 @@ archive() {
 
 echo "+----------------------------------------------------------+"
 echo "| Backing up your personal files and settings"
-#echo "| to the following destination: $OUTFILE.tgz"
 echo "| to the following destination:"
-echo -e "|\t\t$OUTFILE.tgz"
+echo -e "|\t\t$OUTFILE.tar.gz"
 echo -e "| ${RED}WARNING${NC}: any existing files with the same names will"
 echo "|          be overwritten!"
 echo "|          (although that should be just fine)"
