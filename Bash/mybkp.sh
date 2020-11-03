@@ -20,7 +20,7 @@ FILES=(\.zshrc \.zsh_history
     \.ghci \.xmobarrc \.xmonad/xmonad.hs
     \.Xresources \.vnc/xstartup /usr/bin/vncserver
     /etc/ssh/sshd_config /etc/profile /etc/profile/colorls.sh
-    /etc/ansible/ansible.cfg /etc/ansible/hosts/etc/profile)
+    /etc/ansible/ansible.cfg /etc/ansible/hosts)
 # Directories, relative to $HOME
 DIRS=(scripts \.oh-my-zsh KVM YAML HCL)
 
