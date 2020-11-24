@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Single-sourcing the verion number and other global information
+# Single-sourcing the version number and other global information
 # source: https://packaging.python.org/guides/single-sourcing-package-version/
 
 about = {}
