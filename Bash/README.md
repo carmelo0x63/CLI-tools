@@ -1,5 +1,8 @@
 Bash tools
 
+`ssh-keymatch.sh`:
+Checks whether a public/private keypair matches
+
 `bakessh.sh`:
 Checks OpenSSH config against a set of rules
 
