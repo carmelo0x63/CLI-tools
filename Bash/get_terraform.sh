@@ -1,4 +1,4 @@
-i#!/usr/bin/env bash
+#!/usr/bin/env bash
 # Downloads and install the latest version of Terraform
 # author: Carmelo C
 # email: carmelo.califano@gmail.com
@@ -11,7 +11,7 @@ i#!/usr/bin/env bash
 GETTFURL="https://www.terraform.io/downloads.html"
 GETTFURL1="https://releases.hashicorp.com/terraform"
 SWDEPOT="$HOME/Downloads"
-TFPATH="/usr/local/bin"
+TFPATH="/usr/local/bin/terraform"
 # Global variable "OS" is set to match the operating system
 if [ "$(uname -s)" == "Linux" ]; then
     OS="linux"
@@ -29,11 +29,11 @@ fi
 echo "[+] Target platform is $OS on $ARCH"
 
 # First off, we check for an existing terraform binary on the system
-if [ -d "$TFPATH" ]; then
+if [ -e "$TFPATH" ]; then
     if [ "$OS" == "linux" ]; then
-        tfcurrver="$($TFPATH/terraform version | grep -oP "([0-9\\.]+)" | cut -d"." -f1-3 | head -n1)"
+        tfcurrver="$($TFPATH version | grep -oP "([0-9\\.]+)" | cut -d"." -f1-3 | head -n1)"
     else
-        tfcurrver="$($TFPATH/terraform version | ggrep -oP "([0-9\\.]+)" | cut -d"." -f1-3 | head -n1)"
+        tfcurrver="$($TFPATH version | ggrep -oP "([0-9\\.]+)" | cut -d"." -f1-3 | head -n1)"
     fi
     echo "[+] Your current Terraform version is $tfcurrver"
 else
@@ -53,7 +53,6 @@ else
     tfurl="$GETTFURL1/$lastver/$tffile"
 fi
 echo "[+] Terraform.io: found archive $tffile, v. $lastver"
-echo $tfurl
 
 if [ "$tfcurrver" == "$lastver" ]; then
     echo "[+] You are up-to-date"
@@ -86,13 +85,13 @@ if [ "$(id -u)" != "0" ]; then
     sudo -v
 fi
 
-if [ -d "$TFPATH" ]; then
+if [ -e "$TFPATH" ]; then
     echo "[!] Removing previous installation..."
-    sudo rm -rf "$TFPATH"
+    sudo rm -f "$TFPATH"
 fi
 
 echo "[+] Installing Terraform v. $lastver"
-sudo unzip "$SWDEPOT/terraform_$lastver"_$OS_$ARCH.zip -d /usr/local/bin/
+sudo unzip -q "$SWDEPOT"/terraform_"$lastver"_"$OS"_"$ARCH".zip -d /usr/local/bin/
 echo "[+] You're now running Terraform v. $lastver"
 
 # Checking the shell's environment is set up correctly
