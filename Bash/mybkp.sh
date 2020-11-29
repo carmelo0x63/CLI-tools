@@ -39,7 +39,7 @@ NC="\033[0m"         # No Color
 archive() {
     if [ -e "$1" ]; then
         echo -e "${GREEN}[+]${NC} Archiving $1"
-        tar -rhf "$OUTFILE".tar "$1" 2>/dev/null
+        tar --exclude=.terraform -rhf "$OUTFILE".tar "$1" 2>/dev/null
     else
         echo -e "${BLUE}[+]${NC} Skipping file $1..."
     fi
