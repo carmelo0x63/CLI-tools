@@ -71,7 +71,7 @@ if [ -d "$SWDEPOT" ]; then
     echo "[+] Storage \"$SWDEPOT\" exists, saving local copy"
 else
     echo "[+] Storage \"$SWDEPOT\" does not exist, creating directory"
-    mkdir $SWDEPOT
+    mkdir "$SWDEPOT"
 fi
 
 # Likewise, no need to re-download the archive if it's already present
