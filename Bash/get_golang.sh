@@ -3,6 +3,7 @@
 # author: Carmelo C
 # email: carmelo.califano@gmail.com
 # history, date format ISO 8601:
+#  2020-12-03: Added  armv6/7 architecture
 #  2020-09-25: Added platform check: Mac/Linux, amd64, arm64
 #  2020-09-24: First release
 
@@ -21,6 +22,8 @@ fi
 # Global variable "ARCH" is set to match the hardware architecture
 if [ "$(uname -m)" == "x86_64" ]; then
     ARCH="amd64"
+elif [ "$(uname -m)" == "armv6l" ] || [ "$(uname -m)" == "armv7l" ]; then
+    ARCH="armv6l"
 elif [ "$(uname -m)" == "aarch64" ]; then
     ARCH="arm64"
 fi
