@@ -19,11 +19,11 @@ elif [ "$(uname -s)" == "Darwin" ]; then
 fi
 # Global variable "ARCH" is set to match the hardware architecture
 if [ "$(uname -m)" == "x86_64" ]; then
-    ARCH="amd64"
-elif [ "$(uname -m)" == "armv6l" ] || [ "$(uname -m)" == "armv7l" ]; then
-    ARCH="armv6l"
-elif [ "$(uname -m)" == "aarch64" ]; then
-    ARCH="arm64"
+    ARCH="x86_64"
+#elif [ "$(uname -m)" == "armv6l" ] || [ "$(uname -m)" == "armv7l" ]; then
+#    ARCH="armv6l"
+#elif [ "$(uname -m)" == "aarch64" ]; then
+#    ARCH="arm64"
 fi
 # Setup ends
 
