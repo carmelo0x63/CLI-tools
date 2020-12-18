@@ -54,6 +54,7 @@ echo "[+] Fetching the latest version of docker-compose from $BASEURL"
 #    tfurl="$GETTFURL1/$lastver/$tffile"
 #fi
 lastver="$(curl -sSL $BASEURL/latest | awk '/<title>/ {print $2}')"
+dcfile="docker-compose-$OS-$ARCH-$lastver"
 echo "[+] docker-compose: found v. $lastver"
 
 if [ "$dccurrver" == "$lastver" ]; then
@@ -65,7 +66,21 @@ else
     echo "[!] Upgrading: $dccurrver -> $lastver "
 fi
 
-#(cd "$SWDEPOT"; curl -LO --progress-bar $BASEURL/download/$LATEST/docker-compose-$OS-$ARCH; mv docker-compose-$OS-$ARCH docker-compose-$OS-$ARCH-$LATEST)
+# The following lines check whether the destination directory exists
+if [ -d "$SWDEPOT" ]; then
+    echo "[+] Storage \"$SWDEPOT\" exists, saving local copy"
+else
+    echo "[+] Storage \"$SWDEPOT\" does not exist, creating directory"
+    mkdir "$SWDEPOT"
+fi
+
+# Likewise, no need to re-download the archive if it's already present
+if [ -e "$SWDEPOT/$dcfile" ]; then
+    echo "[+] Archive $dcfile already exists"
+else
+    echo "[+] Downloading $dcfile from $BASEURL..."
+    (cd "$SWDEPOT"; curl -LO --progress-bar $BASEURL/download/$lastver/docker-compose-$OS-$ARCH; mv docker-compose-$OS-$ARCH $dcfile)
+fi
 
 #sudo cp $SWDEPOT/docker-compose-$OS-$ARCH-$LATEST $BINPATH
 #sudo chmod +x /usr/local/bin/docker-compose
