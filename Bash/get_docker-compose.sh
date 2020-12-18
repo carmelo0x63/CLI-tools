@@ -29,8 +29,9 @@ fi
 
 LATEST="$(curl -sSL $BASEURL/latest | awk '/<title>/ {print $2}')"
 echo $LATEST
+echo $BASEURL/download/$LATEST/docker-compose-$OS-$ARCH
 
-(cd "$SWDEPOT"; curl -LO --progress-bar $BASEURL/download/$LATEST/docker-compose-$OS-$ARCH-$LATEST)
+(cd "$SWDEPOT"; curl -LO --progress-bar $BASEURL/download/$LATEST/docker-compose-$OS-$ARCH; mv docker-compose-$OS-$ARCH docker-compose-$OS-$ARCH-$LATEST)
 
 sudo cp $SWDEPOT/docker-compose-$OS-$ARCH-$LATEST /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
