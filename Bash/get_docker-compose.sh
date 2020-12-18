@@ -82,6 +82,19 @@ else
     (cd "$SWDEPOT"; curl -LO --progress-bar $BASEURL/download/$lastver/docker-compose-$OS-$ARCH; mv docker-compose-$OS-$ARCH $dcfile)
 fi
 
-#sudo cp $SWDEPOT/docker-compose-$OS-$ARCH-$LATEST $BINPATH
-#sudo chmod +x /usr/local/bin/docker-compose
+# The actual installation/upgrade process starts here
+if [ "$(id -u)" != "0" ]; then
+    echo "[!] sudo credentials are required..."
+    sudo -v
+fi
+
+if [ -e "$BINPATH" ]; then
+    echo "[!] Removing previous installation..."
+    sudo rm -f "$BINPATH"
+fi
+
+echo "[+] Installing docker-compose v. $lastver"
+sudo cp $SWDEPOT/docker-compose-$OS-$ARCH-$lastver $BINPATH
+sudo chmod +x /usr/local/bin/docker-compose
+echo "[+] You're now running docker-compose v. $lastver"
 
