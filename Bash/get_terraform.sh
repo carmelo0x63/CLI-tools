@@ -3,7 +3,7 @@
 # author: Carmelo C
 # email: carmelo.califano@gmail.com
 # history, date format ISO 8601:
-#  2020-12-03: Added  armv6/7 architecture
+#  2020-12-03: Added armv6/7 architecture
 #  2020-11-29: First release
 
 # Setup
