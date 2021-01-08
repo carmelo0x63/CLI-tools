@@ -3,6 +3,7 @@
 # author: Carmelo C
 # email: carmelo.califano@gmail.com
 # history, date format ISO 8601:
+#  2021-01-08: Added ~/.ssh, private + public keys
 #  2020-04-14: Polished output, added more items to FILES
 #              (also split on multpiple lines) and DIRS
 #  2020-04-06: Entirely rewritten by moving files -> array
@@ -19,7 +20,8 @@ FILES=(\.zshrc \.zsh_history
     \.vimrc \.screenrc \.sqliterc
     \.ghci \.xmobarrc \.xmonad/xmonad.hs
     \.Xresources \.vnc/xstartup /usr/bin/vncserver
-    /etc/ssh/sshd_config /etc/profile /etc/profile/colorls.sh
+    \.ssh /etc/ssh/sshd_config
+    /etc/profile /etc/profile/colorls.sh
     /etc/ansible/ansible.cfg /etc/ansible/hosts)
 # Directories, relative to $HOME
 DIRS=(scripts \.oh-my-zsh KVM YAML HCL)
