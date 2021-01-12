@@ -3,16 +3,17 @@
 # author: Carmelo C
 # email: carmelo.califano@gmail.com
 # history, date format ISO 8601:
+#  2021-01-12: Shrunk OMZ backup to custom/ only
 #  2021-01-08: Added ~/.ssh, private + public keys
 #  2020-04-14: Polished output, added more items to FILES
-#              (also split on multpiple lines) and DIRS
+#              (also split on multiple lines) and DIRS
 #  2020-04-06: Entirely rewritten by moving files -> array
 
 # Settings
 DESTDIR="/tmp"
 HOSTNAME=$(hostname -s)
 DATE=$(date "+%Y%m%d")
-LABEL="xmonad"
+LABEL="LABEL"
 OUTFILE="$DESTDIR""/""$HOSTNAME""_""$USER""_""$LABEL""_bkp-""$DATE"
 # Individual files, full path
 FILES=(\.zshrc \.zsh_history
@@ -24,7 +25,7 @@ FILES=(\.zshrc \.zsh_history
     /etc/profile /etc/profile/colorls.sh
     /etc/ansible/ansible.cfg /etc/ansible/hosts)
 # Directories, relative to $HOME
-DIRS=(scripts \.oh-my-zsh KVM YAML HCL)
+DIRS=(scripts \.oh-my-zsh/custom KVM YAML HCL)
 
 # Colors, ANSI escape codes
 # source: https://stackoverflow.com/questions/5947742/how-to-change-the-output-color-of-echo-in-linux
