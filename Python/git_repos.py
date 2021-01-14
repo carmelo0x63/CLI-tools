@@ -3,14 +3,15 @@
 # author: Carmelo C
 # email: carmelo.califano@gmail.com
 # history, date format ISO 8601:
+#  2021-01-14: 1.2 module "requests" removed, no dependencies other than Python standard library
 #  2020-04-05: 1.1 added argparse, quiet mode
 #  2020-01-03: 1.0 initial version
 
-import argparse, requests, sys
+import argparse, json, subprocess, sys
 
 # Version number
-__version__ = "1.1"
-__build__ = "20200907"
+__version__ = "1.2"
+__build__ = "20210114"
 
 def main():
     parser = argparse.ArgumentParser(description='Queries GitHub API returning any repositories owned by <GitHub user name>, version ' + __version__ + ', build ' + __build__ + '.')
@@ -28,17 +29,17 @@ def main():
     # Documentation available at https://developer.github.com/
     url = 'https://api.github.com/users/' + args.username + '/repos'
 
-    r = requests.get(url)
-    R = r.json()
-    N = len(R)
+    repos = subprocess.check_output(['curl', '-sSL', url])
+    repos_list = json.loads(repos)
+    N = len(repos_list)
     SPACER = ''
 
     if not args.quiet:
         print('User \"' + args.username + '\" owns ' + str(N) + ' repositories:')
         SPACER = '-> '
 
-    for repo in R:
-        print(SPACER + repo.get('name'))
+    for repo in repos_list:
+        print(SPACER + repo['name'])
 
 if __name__ == '__main__':
     main()
