@@ -4,6 +4,7 @@
 # author: Carmelo C
 # email: carmelo.califano@gmail.com
 # history:
+#  2.2 Updated: list of Pi flavours
 #  2.1 Added: try/except to handle running on non-Linux platforms
 #  2.0 added: CPU count, frequency
 #  1.2 replaced split with rstrip, moved to Python 3
@@ -17,46 +18,53 @@ import subprocess                      # spawn new processes, connect to their i
 import sys                             # system-specific parameters and functions
 
 # Global settings
-__version__ = '2.1'
-__build__ = '20200419'
+__version__ = '2.2'
+__build__ = '20210128'
 
-PiFlavours = [{'revision':'Beta','date':'Q1 2012','model':'B (Beta)','pcb':'?','mem':'256 MB','notes':'Beta Board'},
-{'revision':'0002','date':'Q1 2012','model':'B','pcb':'1.0','mem':'256 MB','notes':''},
-{'revision':'0003','date':'Q3 2012','model':'B (ECN0001)','pcb':'1.0','mem':'256 MB','notes':'Fuses mod and D14 removed'},
-{'revision':'0004','date':'Q3 2012','model':'B','pcb':'2.0','mem':'256 MB','notes':'(Mfg by Sony)'},
-{'revision':'0005','date':'Q4 2012','model':'B','pcb':'2.0','mem':'256 MB','notes':'(Mfg by Qisda)'},
-{'revision':'0006','date':'Q4 2012','model':'B','pcb':'2.0','mem':'256 MB','notes':'(Mfg by Egoman)'},
-{'revision':'0007','date':'Q1 2013','model':'A','pcb':'2.0','mem':'256 MB','notes':'(Mfg by Egoman)'},
-{'revision':'0008','date':'Q1 2013','model':'A','pcb':'2.0','mem':'256 MB','notes':'(Mfg by Sony)'},
-{'revision':'0009','date':'Q1 2013','model':'A','pcb':'2.0','mem':'256 MB','notes':'(Mfg by Qisda)'},
-{'revision':'000d','date':'Q4 2012','model':'B','pcb':'2.0','mem':'512 MB','notes':'(Mfg by Egoman)'},
-{'revision':'000e','date':'Q4 2012','model':'B','pcb':'2.0','mem':'512 MB','notes':'(Mfg by Sony)'},
-{'revision':'000f','date':'Q4 2012','model':'B','pcb':'2.0','mem':'512 MB','notes':'(Mfg by Qisda)'},
-{'revision':'0010','date':'Q3 2014','model':'B+','pcb':'1.0','mem':'512 MB','notes':'(Mfg by Sony)'},
-{'revision':'0011','date':'Q2 2014','model':'Compute Module 1','pcb':'1.0','mem':'512 MB','notes':'(Mfg by Sony)'},
-{'revision':'0012','date':'Q4 2014','model':'A+','pcb':'1.1','mem':'256 MB','notes':'(Mfg by Sony)'},
-{'revision':'0013','date':'Q1 2015','model':'B+','pcb':'1.2','mem':'512 MB','notes':'(Mfg by Embest)'},
-{'revision':'0014','date':'Q2 2014','model':'Compute Module 1','pcb':'1.0','mem':'512 MB','notes':'(Mfg by Embest)'},
-{'revision':'0015','date':'?','model':'A+','pcb':'1.1','mem':'256 MB / 512 MB','notes':'(Mfg by Embest)'},
-{'revision':'a01040','date':'Unknown','model':'2 Model B','pcb':'1.0','mem':'1 GB','notes':'(Mfg by Sony)'},
-{'revision':'a01041','date':'Q1 2015','model':'2 Model B','pcb':'1.1','mem':'1 GB','notes':'(Mfg by Sony)'},
-{'revision':'a21041','date':'Q1 2015','model':'2 Model B','pcb':'1.1','mem':'1 GB','notes':'(Mfg by Embest)'},
-{'revision':'a22042','date':'Q3 2016','model':'2 Model B (with BCM2837)','pcb':'1.2','mem':'1 GB','notes':'(Mfg by Embest)'},
-{'revision':'900021','date':'Q3 2016','model':'A+','pcb':'1.1','mem':'512 MB','notes':'(Mfg by Sony)'},
-{'revision':'900032','date':'Q2 2016?','model':'B+','pcb':'1.2','mem':'512 MB','notes':'(Mfg by Sony)'},
-{'revision':'900092','date':'Q4 2015','model':'Zero','pcb':'1.2','mem':'512 MB','notes':'(Mfg by Sony)'},
-{'revision':'900093','date':'Q2 2016','model':'Zero','pcb':'1.3','mem':'512 MB','notes':'(Mfg by Sony)'},
-{'revision':'920093','date':'Q4 2016?','model':'Zero','pcb':'1.3','mem':'512 MB','notes':'(Mfg by Embest)'},
-{'revision':'9000c1','date':'Q1 2017','model':'Zero W','pcb':'1.1','mem':'512 MB','notes':'(Mfg by Sony)'},
-{'revision':'a02082','date':'Q1 2016','model':'3 Model B','pcb':'1.2','mem':'1 GB','notes':'(Mfg by Sony)'},
-{'revision':'a020a0','date':'Q1 2017','model':'Compute Module 3 (and CM3 Lite)','pcb':'1.0','mem':'1 GB','notes':'(Mfg by Sony)'},
-{'revision':'a22082','date':'Q1 2016','model':'3 Model B','pcb':'1.2','mem':'1 GB','notes':'(Mfg by Embest)'},
-{'revision':'a32082','date':'Q4 2016','model':'3 Model B','pcb':'1.2','mem':'1 GB','notes':'(Mfg by Sony Japan)'},
-{'revision':'a020d3','date':'Q1 2018','model':'3 Model B+','pcb':'1.3','mem':'1 GB','notes':'(Mfg by Sony)'},
-{'revision':'9020e0','date':'Q4 2018','model':'3 Model A+','pcb':'1.0','mem':'512 MB','notes':'(Mfg by Sony)'},
-{'revision':'a03111','date':'Q2 2019','model':'4 Model B','pcb':'1.1','mem':'1 GB','notes':'(Mfg by Sony)'},
-{'revision':'b03111','date':'Q2 2019','model':'4 Model B','pcb':'1.1','mem':'2 GB','notes':'(Mfg by Sony)'},
-{'revision':'c03111','date':'Q2 2019','model':'4 Model B','pcb':'1.1','mem':'4 GB','notes':'(Mfg by Sony)'}
+PiFlavours = [
+  {'revision':'Beta','date':'Q1 2012','model':'B (Beta)','pcb':'?','mem':'256 MB','notes':'Beta Board'},
+  {'revision':'0002','date':'Q1 2012','model':'B','pcb':'1.0','mem':'256 MB','notes':''},
+  {'revision':'0003','date':'Q3 2012','model':'B (ECN0001)','pcb':'1.0','mem':'256 MB','notes':'Fuses mod and D14 removed'},
+  {'revision':'0004','date':'Q3 2012','model':'B','pcb':'2.0','mem':'256 MB','notes':'(Mfg by Sony)'},
+  {'revision':'0005','date':'Q4 2012','model':'B','pcb':'2.0','mem':'256 MB','notes':'(Mfg by Qisda)'},
+  {'revision':'0006','date':'Q4 2012','model':'B','pcb':'2.0','mem':'256 MB','notes':'(Mfg by Egoman)'},
+  {'revision':'0007','date':'Q1 2013','model':'A','pcb':'2.0','mem':'256 MB','notes':'(Mfg by Egoman)'},
+  {'revision':'0008','date':'Q1 2013','model':'A','pcb':'2.0','mem':'256 MB','notes':'(Mfg by Sony)'},
+  {'revision':'0009','date':'Q1 2013','model':'A','pcb':'2.0','mem':'256 MB','notes':'(Mfg by Qisda)'},
+  {'revision':'000d','date':'Q4 2012','model':'B','pcb':'2.0','mem':'512 MB','notes':'(Mfg by Egoman)'},
+  {'revision':'000e','date':'Q4 2012','model':'B','pcb':'2.0','mem':'512 MB','notes':'(Mfg by Sony)'},
+  {'revision':'000f','date':'Q4 2012','model':'B','pcb':'2.0','mem':'512 MB','notes':'(Mfg by Qisda)'},
+  {'revision':'0010','date':'Q3 2014','model':'B+','pcb':'1.0','mem':'512 MB','notes':'(Mfg by Sony)'},
+  {'revision':'0011','date':'Q2 2014','model':'Compute Module 1','pcb':'1.0','mem':'512 MB','notes':'(Mfg by Sony)'},
+  {'revision':'0012','date':'Q4 2014','model':'A+','pcb':'1.1','mem':'256 MB','notes':'(Mfg by Sony)'},
+  {'revision':'0013','date':'Q1 2015','model':'B+','pcb':'1.2','mem':'512 MB','notes':'(Mfg by Embest)'},
+  {'revision':'0014','date':'Q2 2014','model':'Compute Module 1','pcb':'1.0','mem':'512 MB','notes':'(Mfg by Embest)'},
+  {'revision':'0015','date':'?','model':'A+','pcb':'1.1','mem':'256 MB / 512 MB','notes':'(Mfg by Embest)'},
+  {'revision':'a01040','date':'Unknown','model':'2 model B','pcb':'1.0','mem':'1 GB','notes':'(Mfg by Sony)'},
+  {'revision':'a01041','date':'Q1 2015','model':'2 model B','pcb':'1.1','mem':'1 GB','notes':'(Mfg by Sony)'},
+  {'revision':'a21041','date':'Q1 2015','model':'2 model B','pcb':'1.1','mem':'1 GB','notes':'(Mfg by Embest)'},
+  {'revision':'a22042','date':'Q3 2016','model':'2 model B (with BCM2837)','pcb':'1.2','mem':'1 GB','notes':'(Mfg by Embest)'},
+  {'revision':'900021','date':'Q3 2016','model':'A+','pcb':'1.1','mem':'512 MB','notes':'(Mfg by Sony)'},
+  {'revision':'900032','date':'Q2 2016?','model':'B+','pcb':'1.2','mem':'512 MB','notes':'(Mfg by Sony)'},
+  {'revision':'900092','date':'Q4 2015','model':'Zero','pcb':'1.2','mem':'512 MB','notes':'(Mfg by Sony)'},
+  {'revision':'900093','date':'Q2 2016','model':'Zero','pcb':'1.3','mem':'512 MB','notes':'(Mfg by Sony)'},
+  {'revision':'920093','date':'Q4 2016?','model':'Zero','pcb':'1.3','mem':'512 MB','notes':'(Mfg by Embest)'},
+  {'revision':'9000c1','date':'Q1 2017','model':'Zero W','pcb':'1.1','mem':'512 MB','notes':'(Mfg by Sony)'},
+  {'revision':'a02082','date':'Q1 2016','model':'3 model B','pcb':'1.2','mem':'1 GB','notes':'(Mfg by Sony)'},
+  {'revision':'a020a0','date':'Q1 2017','model':'Compute Module 3 (and CM3 Lite)','pcb':'1.0','mem':'1 GB','notes':'(Mfg by Sony)'},
+  {'revision':'a22082','date':'Q1 2016','model':'3 model B','pcb':'1.2','mem':'1 GB','notes':'(Mfg by Embest)'},
+  {'revision':'a32082','date':'Q4 2016','model':'3 model B','pcb':'1.2','mem':'1 GB','notes':'(Mfg by Sony Japan)'},
+  {'revision':'a020d3','date':'Q1 2018','model':'3 model B+','pcb':'1.3','mem':'1 GB','notes':'(Mfg by Sony)'},
+  {'revision':'9020e0','date':'Q4 2018','model':'3 model A+','pcb':'1.0','mem':'512 MB','notes':'(Mfg by Sony)'},
+  {'revision':'a02100','date':'Q1 2019','model':'Compute Module 3+','pcb':'1.0','mem':'1 GB','notes':'(Mfg by Sony)'},
+  {'revision':'a03111','date':'Q2 2019','model':'4 model B','pcb':'1.1','mem':'1 GB','notes':'(Mfg by Sony)'},
+  {'revision':'b03111','date':'Q2 2019','model':'4 model B','pcb':'1.1','mem':'2 GB','notes':'(Mfg by Sony)'},
+  {'revision':'b03112','date':'Q2 2019','model':'4 model B','pcb':'1.2','mem':'2 GB','notes':'(Mfg by Sony)'},
+  {'revision':'b03114','date':'Q2 2020','model':'4 model B','pcb':'1.4','mem':'2 GB','notes':'(Mfg by Sony)'},
+  {'revision':'c03111','date':'Q2 2019','model':'4 model B','pcb':'1.1','mem':'4 GB','notes':'(Mfg by Sony)'},
+  {'revision':'c03112','date':'Q2 2019','model':'4 model B','pcb':'1.2','mem':'4 GB','notes':'(Mfg by Sony)'},
+  {'revision':'c03114','date':'Q2 2020','model':'4 model B','pcb':'1.4','mem':'4 GB','notes':'(Mfg by Sony)'},
+  {'revision':'d03114','date':'Q2 2020','model':'4 model B','pcb':'1.4','mem':'8 GB','notes':'(Mfg by Sony)'}
 ]
 
 def checkFlav():
