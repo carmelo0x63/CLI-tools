@@ -108,7 +108,7 @@ def main():
         if d1 is None:
             print('[-] Search returned ' + str(d1))
             sys.exit(10)
-        print({**d1})
+        print(d1)
         sys.exit(0)
 
     if args.long:
