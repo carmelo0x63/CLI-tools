@@ -3,6 +3,7 @@
 # author: Carmelo C
 # email: carmelo.califano@gmail.com
 # history, date format ISO 8601:
+#  2021-03-07: Fixed a bug due to the length of Go version
 #  2020-12-03: Added armv6/7 architecture
 #  2020-09-25: Added platform check: Mac/Linux, amd64, arm64
 #  2020-09-24: First release
@@ -49,11 +50,21 @@ echo "[+] Fetching the latest version of Go/Golang from $GETGOURL"
 if [ "$OS" == "linux" ]; then
     gofile="$(curl -s "$GETGOURL"/dl/ | grep -oP "go([0-9\\.]+)\\.$OS-$ARCH\\.tar\\.gz" | head -n1)"
     gourl="$GETGOURL/dl/$gofile"
-    lastver=$(echo "$gofile" | grep -oP "([0-9\\.]+)" | head -n1 | cut -d"." -f1-3)
+    lastverlen="$(awk -F"." '{print NF-1}' <<< $gofile)"  # "1.16" -> "4", "1.16.0" -> "5"
+    if [ "$lastverlen" == "5" ]; then
+        lastver=$(echo "$gofile" | grep -oP "([0-9\\.]+)" | head -n1 | cut -d"." -f1-3)
+    else
+        lastver=$(echo "$gofile" | grep -oP "([0-9\\.]+)" | head -n1 | cut -d"." -f1-2)
+    fi
 else
     gofile="$(curl -s "$GETGOURL"/dl/ | ggrep -oP "go([0-9\\.]+)\\.$OS-$ARCH\\.tar\\.gz" | head -n1)"
     gourl="$GETGOURL/dl/$gofile"
-    lastver=$(echo "$gofile" | ggrep -oP "([0-9\\.]+)" | head -n1 | cut -d"." -f1-3)
+    lastverlen="$(awk -F"." '{print NF-1}' <<< $gofile)"  # "1.16" -> "4", "1.16.0" -> "5"
+    if [ "$lastverlen" == "5" ]; then
+        lastver=$(echo "$gofile" | ggrep -oP "([0-9\\.]+)" | head -n1 | cut -d"." -f1-3)
+    else
+        lastver=$(echo "$gofile" | ggrep -oP "([0-9\\.]+)" | head -n1 | cut -d"." -f1-2)
+    fi
 fi
 echo "[+] Golang.org: found archive $gofile, v. $lastver"
 
