@@ -1,3 +1,5 @@
+# Obsolete: this script lives in its own repository now
+# git@github.com:carmelo0x99/Collatz-Conjecture.git
 #!/usr/bin/env python
 # description: Calculating Collatz conjecture convergence
 # author: Carmelo C
