@@ -19,7 +19,7 @@ import sys                             # system-specific parameters and function
 
 # Global settings
 __version__ = '2.2'
-__build__ = '20210128'
+__build__ = '20211027'
 
 PiFlavours = [
   {'revision':'Beta','date':'Q1 2012','model':'B (Beta)','pcb':'?','mem':'256 MB','notes':'Beta Board'},
@@ -78,7 +78,7 @@ def checkFlav():
     # Searches in PiFlavours (list of dictionaries) for the corresponding record
     for piflav in PiFlavours:
         if piflav['revision'] == myflav:
-            return(piflav)
+            return piflav
 
 def checkSpecs():
     # Parses CPU count, MHz
