@@ -22,14 +22,14 @@ FILES=(\.zshrc \.zsh_history
        \.bashrc \.profile \.bash_history
        \.vimrc \.screenrc \.sqliterc
        \.kube/config
-       \.ssh /etc/ssh/sshd_config
+       /etc/ssh/sshd_config
        /etc/profile /etc/profile/colorls.sh
        /etc/ansible/ansible.cfg /etc/ansible/hosts
        \.ghci \.xmobarrc \.xmonad/xmonad.hs
        \.Xresources \.vnc/xstartup /usr/bin/vncserver
        \.config/conky/conky.conf)
 # Directories, relative to $HOME
-DIRS=(scripts \.oh-my-zsh/custom KVM YAML HCL)
+DIRS=(scripts \.ssh \.rsync \.oh-my-zsh/custom KVM YAML HCL)
 
 # Colors, ANSI escape codes
 # source: https://stackoverflow.com/questions/5947742/how-to-change-the-output-color-of-echo-in-linux
