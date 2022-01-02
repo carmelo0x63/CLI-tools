@@ -19,7 +19,7 @@ import sys                             # system-specific parameters and function
 
 # Global settings
 __version__ = '2.2'
-__build__ = '20211027'
+__build__ = '20220102'
 
 PiFlavours = [
   {'revision':'Beta','date':'Q1 2012','model':'B (Beta)','pcb':'?','mem':'256 MB','notes':'Beta Board'},
@@ -64,7 +64,8 @@ PiFlavours = [
   {'revision':'c03111','date':'Q2 2019','model':'4 model B','pcb':'1.1','mem':'4 GB','notes':'(Mfg by Sony)'},
   {'revision':'c03112','date':'Q2 2019','model':'4 model B','pcb':'1.2','mem':'4 GB','notes':'(Mfg by Sony)'},
   {'revision':'c03114','date':'Q2 2020','model':'4 model B','pcb':'1.4','mem':'4 GB','notes':'(Mfg by Sony)'},
-  {'revision':'d03114','date':'Q2 2020','model':'4 model B','pcb':'1.4','mem':'8 GB','notes':'(Mfg by Sony)'}
+  {'revision':'d03114','date':'Q2 2020','model':'4 model B','pcb':'1.4','mem':'8 GB','notes':'(Mfg by Sony)'},
+  {'revision':'902120','date':'Q4 2021','model':'Zero 2 W','pcb':'1.0','mem':'512 MB','notes':'(Mfg by Sony)'}
 ]
 
 def checkFlav():
