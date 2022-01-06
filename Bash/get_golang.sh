@@ -3,6 +3,7 @@
 # author: Carmelo C
 # email: carmelo.califano@gmail.com
 # history, date format ISO 8601:
+#  2022-01-06: Replaced golang.org with go.dev
 #  2021-03-07: Fixed a bug due to the length of Go version
 #  2020-12-03: Added armv6/7 architecture
 #  2020-09-25: Added platform check: Mac/Linux, amd64, arm64
@@ -11,7 +12,7 @@
 # Setup
 #set -Eeuo pipefail
 #set -x
-GETGOURL="https://golang.org"
+GETGOURL="https://go.dev"
 SWDEPOT="$HOME/Downloads"
 GOPATH="/usr/local/go"
 # Global variable "OS" is set to match the operating system
