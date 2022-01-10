@@ -13,6 +13,7 @@
 #set -Eeuo pipefail
 #set -x
 GETGOURL="https://go.dev"
+gocurrver="EMPTY"
 SWDEPOT="$HOME/Downloads"
 GOPATH="/usr/local/go"
 # Global variable "OS" is set to match the operating system
