@@ -4,6 +4,7 @@
 # author: Carmelo C
 # email: carmelo.califano@gmail.com
 # history:
+#  2.3 Extracting "Model" from /proc/cpuinfo
 #  2.2 Updated: list of Pi flavours
 #  2.1 Added: try/except to handle running on non-Linux platforms
 #  2.0 added: CPU count, frequency
@@ -18,8 +19,8 @@ import subprocess                      # spawn new processes, connect to their i
 import sys                             # system-specific parameters and functions
 
 # Global settings
-__version__ = '2.2'
-__build__ = '20220102'
+__version__ = '2.3'
+__build__ = '20220115'
 
 PiFlavours = [
   {'revision':'Beta','date':'Q1 2012','model':'B (Beta)','pcb':'?','mem':'256 MB','notes':'Beta Board'},
@@ -71,15 +72,16 @@ PiFlavours = [
 def checkFlav():
     # Parses /proc/cpuinfo to get "Revision" number
     try:
-        myflav = subprocess.check_output(["awk","/^Revision/ {sub(\"^1000\", \"\", $3); print $3}","/proc/cpuinfo"]).decode().rstrip()
+        myFlav = subprocess.check_output(["awk","/^Revision/ {sub(\"^1000\", \"\", $3); print $3}","/proc/cpuinfo"]).decode().rstrip()
+        myModel = subprocess.check_output(["awk","/^Model/ {print $3\" \"$4}","/proc/cpuinfo"]).decode().rstrip()
     except:
         print('[-] An exception occurred')
         sys.exit(20)
 
     # Searches in PiFlavours (list of dictionaries) for the corresponding record
     for piflav in PiFlavours:
-        if piflav['revision'] == myflav:
-            return piflav
+        if piflav['revision'] == myFlav:
+            return {**piflav, **{'SBC': myModel}}
 
 def checkSpecs():
     # Parses CPU count, MHz
