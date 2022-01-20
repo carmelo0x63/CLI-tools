@@ -1,2 +1,3 @@
 # Local files that shouldn't be synchronized with the remote
 *.exe
+*.o
