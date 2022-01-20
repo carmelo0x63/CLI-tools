@@ -75,7 +75,7 @@ Hello, worldZ!
 ### Julia
 Source code:
 <pre>
-print("Hello World!\n")
+print("Hello, worldZ!\n")
 </pre>
 
 Check:
