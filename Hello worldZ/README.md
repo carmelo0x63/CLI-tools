@@ -18,7 +18,7 @@ _start:
   syscall           ; );
 
 section .rodata
-  msg: db "Hello, world!", 10
+  msg: db "Hello, worldZ!", 10
   msglen: equ $ - msg
 </pre>
 
@@ -29,7 +29,7 @@ $ nasm -f elf64 hello_x64.s -o hello_x64.o
 $ ld hello_x64.o -o hello_x64.exe
 
 $ ./hello_x64.exe
-Hello, world!
+Hello, worldZ!
 </pre>
 
 #### AArch64
@@ -42,7 +42,7 @@ Source code:
 #include <stdio.h>
 
 int main(void) {
-    printf("Hello, world!\n");
+    printf("Hello, worldZ!\n");
     return 0;
 }</pre>
 
@@ -51,7 +51,7 @@ Check:
 $ gcc hello_c.c -o hello_c.exe
 
 $ ./hello_c.exe
-Hello, world!
+Hello, worldZ!
 </pre>
 
 ----
@@ -61,13 +61,13 @@ Source code:
 <pre>
 #!/usr/bin/env python3
 
-print('Hello, world!')
+print('Hello, worldZ!')
 </pre>
 
 Check:
 <pre>
 $ python3 hello.py
-Hello, world!
+Hello, worldZ!
 </pre>
 
 ----
@@ -81,7 +81,7 @@ print("Hello World!\n")
 Check:
 <pre>
 $ julia hello.jl
-Hello World!
+Hello WorldZ!
 </pre>
 
 <!--
