@@ -3,17 +3,19 @@
 # author: Carmelo C
 # email: carmelo.califano@gmail.com
 # history, date format ISO 8601:
+#  2022-01-21: 1.1 moved HOSTS to external file (CFGFILE)
 #  2022-01-11: 1.0 initial version
 
 import argparse      # Parser for command-line options, arguments and sub-commands
+import json          # JSON encoder and decoder
 import socket        # Low-level networking interface
 import subprocess    # Subprocess management
 import sys           # System-specific parameters and functions
 
 # Global variables
-__version__ = "1.0"
-__build__ = "20220111"
-HOSTS = ['host1', 'host2', 'host3']
+__version__ = "1.1"
+__build__ = "20220121"
+CFGFILE = 'hhs2.cfg'
 
 def ping(host, ipaddr):
     process = subprocess.Popen(['ping', '-c1', '-W1', ipaddr], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -46,10 +48,10 @@ def iterate(mode):
             print('[!] Host ' + host + ' is NOT available')
             continue
 
-        if (mode == '1'):
+        if (mode == 1):
             ping(host, ipaddr)
 
-        if (mode == '2'):
+        if (mode == 2):
             osinfo(host, ipaddr)
 
 
@@ -65,6 +67,11 @@ def main():
         sys.exit(1)
     else:
         args = parser.parse_args() # else parse command line
+
+    with open(CFGFILE, 'r') as f:
+        cfg = f.read()
+        global HOSTS
+        HOSTS = json.loads(cfg)
 
     if args.ping: iterate(1)
     if args.osinfo: iterate(2)
