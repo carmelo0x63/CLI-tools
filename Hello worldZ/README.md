@@ -9,8 +9,8 @@ section .text
 _start:
   mov rax, 1        ; write(
   mov rdi, 1        ;   STDOUT_FILENO,
-  mov rsi, msg      ;   "Hello, world!\n",
-  mov rdx, msglen   ;   sizeof("Hello, world!\n")
+  mov rsi, msg      ;   "Hello, worldZ!\n",
+  mov rdx, msglen   ;   sizeof("Hello, worldZ!\n")
   syscall           ; );
 
   mov rax, 60       ; exit(
@@ -33,6 +33,13 @@ Hello, worldZ!
 </pre>
 
 #### AArch64
+Source code:
+<pre>
+</pre>
+
+Check:
+<pre>
+</pre>
 
 ----
 
@@ -44,7 +51,8 @@ Source code:
 int main(void) {
     printf("Hello, worldZ!\n");
     return 0;
-}</pre>
+}
+</pre>
 
 Check:
 <pre>
@@ -81,7 +89,27 @@ print("Hello, worldZ!\n")
 Check:
 <pre>
 $ julia hello.jl
-Hello WorldZ!
+Hello, worldZ!
+</pre>
+
+----
+
+### Go
+Source code:
+<pre>
+package main
+
+import "fmt"
+
+func main() {
+	fmt.Println("Hello, worldZ!")
+}
+</pre>
+
+Check:
+<pre>
+$ go run hello.go                                                       
+Hello, worldZ!
 </pre>
 
 <!--
@@ -96,3 +124,5 @@ Check:
 <pre>
 </pre>
 -->
+
+
