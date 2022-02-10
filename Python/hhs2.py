@@ -3,19 +3,21 @@
 # author: Carmelo C
 # email: carmelo.califano@gmail.com
 # history, date format ISO 8601:
+#  2022-02-10: 1.2 Fixed an issue by which the external file wasn't loaded
 #  2022-01-21: 1.1 moved HOSTS to external file (CFGFILE)
 #  2022-01-11: 1.0 initial version
 
 import argparse      # Parser for command-line options, arguments and sub-commands
 import json          # JSON encoder and decoder
+import os            # Miscellaneous operating system interfaces
 import socket        # Low-level networking interface
 import subprocess    # Subprocess management
 import sys           # System-specific parameters and functions
 
 # Global variables
-__version__ = "1.1"
-__build__ = "20220121"
-CFGFILE = 'hhs2.cfg'
+__version__ = "1.2"
+__build__ = "20220210"
+CFGFILE = os.path.abspath(os.path.dirname(__file__)) + '/hhs2.cfg'
 
 def ping(host, ipaddr):
     process = subprocess.Popen(['ping', '-c1', '-W1', ipaddr], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
