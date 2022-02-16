@@ -9,8 +9,8 @@ section .text
 _start:
   mov rax, 1        ; write(
   mov rdi, 1        ;   STDOUT_FILENO,
-  mov rsi, msg      ;   "Hello, world!\n",
-  mov rdx, msglen   ;   sizeof("Hello, world!\n")
+  mov rsi, msg      ;   "Hello, worldZ!\n",
+  mov rdx, msglen   ;   sizeof("Hello, worldZ!\n")
   syscall           ; );
 
   mov rax, 60       ; exit(
@@ -33,6 +33,13 @@ Hello, worldZ!
 </pre>
 
 #### AArch64
+Source code:
+<pre>
+</pre>
+
+Check:
+<pre>
+</pre>
 
 ----
 
@@ -44,7 +51,8 @@ Source code:
 int main(void) {
     printf("Hello, worldZ!\n");
     return 0;
-}</pre>
+}
+</pre>
 
 Check:
 <pre>
@@ -86,15 +94,32 @@ Hello, worldZ!
 
 ----
 
+<<<<<<< HEAD
 ### Node.js
 Source code:
 <pre>
 console.log("Hello, worldZ!")
+=======
+### Go
+Source code:
+<pre>
+package main
+
+import "fmt"
+
+func main() {
+	fmt.Println("Hello, worldZ!")
+}
+>>>>>>> f1144667f217d24fbc077c1e0f3a629eacafa0cc
 </pre>
 
 Check:
 <pre>
+<<<<<<< HEAD
 $ node hello.js
+=======
+$ go run hello.go                                                       
+>>>>>>> f1144667f217d24fbc077c1e0f3a629eacafa0cc
 Hello, worldZ!
 </pre>
 
@@ -110,3 +135,5 @@ Check:
 <pre>
 </pre>
 -->
+
+
