@@ -1,6 +1,6 @@
 ### Assembly
 #### x86_64
-Source code:
+Source code: `hello_x64.s`
 <pre>
 global _start
 
@@ -44,7 +44,7 @@ Check:
 ----
 
 ### C
-Source code:
+Source code: `hello_c.c`
 <pre>
 #include <stdio.h>
 
@@ -65,7 +65,7 @@ Hello, worldZ!
 ----
 
 ### Python
-Source code:
+Source code: `hello.py`
 <pre>
 #!/usr/bin/env python3
 
@@ -81,7 +81,7 @@ Hello, worldZ!
 ----
 
 ### Julia
-Source code:
+Source code: `hello.jl`
 <pre>
 print("Hello, worldZ!\n")
 </pre>
@@ -94,14 +94,8 @@ Hello, worldZ!
 
 ----
 
-<<<<<<< HEAD
-### Node.js
-Source code:
-<pre>
-console.log("Hello, worldZ!")
-=======
 ### Go
-Source code:
+Source code: `hello.go`
 <pre>
 package main
 
@@ -110,16 +104,25 @@ import "fmt"
 func main() {
 	fmt.Println("Hello, worldZ!")
 }
->>>>>>> f1144667f217d24fbc077c1e0f3a629eacafa0cc
 </pre>
 
 Check:
 <pre>
-<<<<<<< HEAD
-$ node hello.js
-=======
 $ go run hello.go                                                       
->>>>>>> f1144667f217d24fbc077c1e0f3a629eacafa0cc
+Hello, worldZ!
+</pre>
+
+----
+
+### Node.js
+Source code: `hello.js`
+<pre>
+console.log("Hello, worldZ!")
+</pre>
+
+Check:
+<pre>
+$ node hello.js
 Hello, worldZ!
 </pre>
 
