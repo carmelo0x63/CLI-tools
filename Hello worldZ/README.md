@@ -81,7 +81,21 @@ print("Hello, worldZ!\n")
 Check:
 <pre>
 $ julia hello.jl
-Hello WorldZ!
+Hello, worldZ!
+</pre>
+
+----
+
+### Node.js
+Source code:
+<pre>
+console.log("Hello, worldZ!")
+</pre>
+
+Check:
+<pre>
+$ node hello.js
+Hello, worldZ!
 </pre>
 
 <!--
