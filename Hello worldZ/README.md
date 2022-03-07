@@ -1,6 +1,6 @@
 ### Assembly
 #### x86_64
-Source code:
+Source code: `hello_x64.s`
 <pre>
 global _start
 
@@ -33,18 +33,47 @@ Hello, worldZ!
 </pre>
 
 #### AArch64
-Source code:
+Source code: `hello_a64.s`
 <pre>
+.data
+
+/* Data segment: define our message string and calculate its length. */
+msg:
+    .ascii        "Hello, worldZ!\n"
+len = . - msg
+
+.text
+
+/* Our application's entry point. */
+.globl _start
+_start:
+    /* syscall write(int fd, const void *buf, size_t count) */
+    mov     x0, #1      /* fd := STDOUT_FILENO */
+    ldr     x1, =msg    /* buf := msg */
+    ldr     x2, =len    /* count := len */
+    mov     w8, #64     /* write is syscall #64 */
+    svc     #0          /* invoke syscall */
+
+    /* syscall exit(int status) */
+    mov     x0, #0      /* status := 0 */
+    mov     w8, #93     /* exit is syscall #93 */
+    svc     #0          /* invoke syscall */
 </pre>
 
 Check:
 <pre>
+$ as -o hello_a64.o hello_a64.s
+
+$ ld -s -o hello_a64.exe hello_a64.o
+
+$ ./hello_a64.exe
+Hello, worldZ!
 </pre>
 
 ----
 
 ### C
-Source code:
+Source code: `hello_c.c`
 <pre>
 #include <stdio.h>
 
@@ -65,7 +94,7 @@ Hello, worldZ!
 ----
 
 ### Python
-Source code:
+Source code: `hello.py`
 <pre>
 #!/usr/bin/env python3
 
@@ -81,7 +110,7 @@ Hello, worldZ!
 ----
 
 ### Julia
-Source code:
+Source code: `hello.jl`
 <pre>
 print("Hello, worldZ!\n")
 </pre>
@@ -95,7 +124,7 @@ Hello, worldZ!
 ----
 
 ### Go
-Source code:
+Source code: `hello.go`
 <pre>
 package main
 
@@ -108,25 +137,39 @@ func main() {
 
 Check:
 <pre>
-$ go run hello.go                                                       
+$ go run hello.go
+Hello, worldZ!
+</pre>
+
+----
+
+### Node.js
+Source code: `hello.js`
+<pre>
+console.log("Hello, worldZ!")
+</pre>
+
+Check:
+<pre>
+$ node hello.js
 Hello, worldZ!
 </pre>
 
 ----
 
 ### Haskell
-Source code:
+Source code `hello_hs.hs`:
 <pre>
 main = putStrLn "Hello, worldZ!"
 </pre>
 
 Check:
 <pre>
-$ ghc --make hello.hs
-[1 of 1] Compiling Main             ( hello.hs, hello.o )
-Linking hello ...
+$ ghc --make hello_hs.hs
+[1 of 1] Compiling Main ( hello_hs.hs, hello_hs.o )
+Linking hello_hs ...
 
-$ ./hello
+$ ./hello_hs
 Hello, worldZ!
 </pre>
 
