@@ -112,6 +112,24 @@ $ go run hello.go
 Hello, worldZ!
 </pre>
 
+----
+
+### Haskell
+Source code:
+<pre>
+main = putStrLn "Hello, worldZ!"
+</pre>
+
+Check:
+<pre>
+$ ghc --make hello.hs
+[1 of 1] Compiling Main             ( hello.hs, hello.o )
+Linking hello ...
+
+$ ./hello
+Hello, worldZ!
+</pre>
+
 <!--
 ----
 
