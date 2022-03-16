@@ -173,6 +173,28 @@ $ ./hello_hs
 Hello, worldZ!
 </pre>
 
+----
+
+### Zig
+Source code:
+<pre>
+const std = @import("std");
+
+pub fn main() !void {
+    const stdout = std.io.getStdOut().writer();
+//    try stdout.print("Hello, {s}!\n", .{"world"});
+    try stdout.print("Hello, worldZ!\n", .{});
+}
+</pre>
+
+Check:
+<pre>
+$ zig build-exe hello.zig
+
+$ ./hello
+Hello, worldZ!
+</pre>
+
 <!--
 ----
 
@@ -185,5 +207,4 @@ Check:
 <pre>
 </pre>
 -->
-
 
