@@ -5,6 +5,7 @@
 # history, date format ISO 8601:
 #  2022-07-10: 1.0 initial version
 # Adapted from: https://github.com/gh0x0st/python3_multithreading
+# Useful link(s): https://gist.github.com/sourceperl/10288663
 
 # Import some modules
 import argparse         # Parser for command-line options, arguments and sub-commands
@@ -29,7 +30,7 @@ def worker():
 def send_ping(target):
     icmp = subprocess.Popen(['ping', '-c', '1', '-W', '1', str(target)], stdout = subprocess.PIPE, stderr = subprocess.PIPE).communicate()
     with thread_lock:
-        if '1 packets received' in icmp[0].decode('utf-8'):
+        if '0% packet loss' in icmp[0].decode('utf-8'):
             print(f'[+] {target} is UP')
         else:
             if IS_VERBOSE:
@@ -102,7 +103,6 @@ if __name__ == '__main__':
     # Define a print lock
     thread_lock = threading.Lock()
     # Create our queue
-    global q
     q = queue.Queue()
 
     main()
