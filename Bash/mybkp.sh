@@ -3,6 +3,7 @@
 # author: Carmelo C
 # email: carmelo.califano@gmail.com
 # history, date format ISO 8601:
+#  2022-10-06: Added GPG data
 #  2021-04-19: Added kubeconfig
 #  2021-03-07: Added conky.conf (BunsenLabs Linux)
 #  2021-01-12: Shrunk OMZ backup to custom/ only
@@ -21,7 +22,7 @@ OUTFILE="$DESTDIR""/""$HOSTNAME""_""$USER""_""$LABEL""_bkp-""$DATE"
 FILES=(\.zshrc \.zsh_history
        \.bashrc \.profile \.bash_history
        \.vimrc \.screenrc \.sqliterc
-       \.kube/config
+       \.gnupg \.kube/config
        /etc/ssh/sshd_config
        /etc/profile /etc/profile/colorls.sh
        /etc/ansible/ansible.cfg /etc/ansible/hosts
