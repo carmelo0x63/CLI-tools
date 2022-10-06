@@ -22,7 +22,7 @@ OUTFILE="$DESTDIR""/""$HOSTNAME""_""$USER""_""$LABEL""_bkp-""$DATE"
 FILES=(\.zshrc \.zsh_history
        \.bashrc \.profile \.bash_history
        \.vimrc \.screenrc \.sqliterc
-       \.gnupg \.kube/config
+       \.kube/config
        /etc/ssh/sshd_config
        /etc/profile /etc/profile/colorls.sh
        /etc/ansible/ansible.cfg /etc/ansible/hosts
@@ -30,7 +30,7 @@ FILES=(\.zshrc \.zsh_history
        \.Xresources \.vnc/xstartup /usr/bin/vncserver
        \.config/conky/conky.conf)
 # Directories, relative to $HOME
-DIRS=(scripts \.ssh \.rsync \.oh-my-zsh/custom KVM YAML HCL)
+DIRS=(scripts \.ssh \.rsync \.gnupg \.oh-my-zsh/custom KVM YAML HCL)
 
 # Colors, ANSI escape codes
 # source: https://stackoverflow.com/questions/5947742/how-to-change-the-output-color-of-echo-in-linux
