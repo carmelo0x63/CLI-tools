@@ -3,6 +3,7 @@
 # author: Carmelo C
 # email: carmelo.califano@gmail.com
 # history, date format ISO 8601:
+#  2023-05-15: 1.3.1 TCP scan operates on per-host custom port
 #  2023-05-15: 1.3 Added output colors
 #  2022-02-10: 1.2 Fixed an issue by which the external file wasn't loaded
 #  2022-01-21: 1.1 moved HOSTS to external file (CFGFILE)
@@ -16,7 +17,7 @@ import subprocess    # Subprocess management
 import sys           # System-specific parameters and functions
 
 # Global variables
-__version__ = "1.3"
+__version__ = "1.3.1"
 __build__ = "20230515"
 CFGFILE = os.path.abspath(os.path.dirname(__file__)) + '/hhs2.cfg'
 
@@ -45,12 +46,12 @@ def pingscan(host, ipaddr):
         print('[!] ERROR: ' + stdout.decode())
 
 
-def scan22(host, ipaddr):
-    process = subprocess.Popen(['nc', '-w1', '-G1', ipaddr, '22'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+def scan22(host, ipaddr, port):
+    process = subprocess.Popen(['nc', '-w1', '-G1', ipaddr, str(port)], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     stdout, stderr = process.communicate()
 
     if stderr == b'':
-        print(bcolors.OKGREEN + '[+]' + bcolors.ENDC + ' Host ' + host + ' (' + ipaddr + ') ' + ': ' + str(stdout))
+        print(bcolors.OKGREEN + '[+]' + bcolors.ENDC + ' Host ' + host + ' (' + ipaddr + ':' + str(port) + ') ' + ': ' + str(stdout))
     else:
         print(bcolors.WARNING + '[!]' + bcolors.ENDC + ' ERROR: ' + stdout.decode())
 
@@ -67,7 +68,7 @@ def iterate(mode):
             pingscan(host, ipaddr)
 
         if (mode == 2):
-            scan22(host, ipaddr)
+            scan22(host, ipaddr, HOSTS[host])
 
 
 def main():
