@@ -3,6 +3,7 @@
 # author: Carmelo C
 # email: carmelo.califano@gmail.com
 # history, date format ISO 8601:
+#  2023-05-16: 1.3.2 config file renamed to .json
 #  2023-05-15: 1.3.1 TCP scan operates on per-host custom port
 #  2023-05-15: 1.3 Added output colors
 #  2022-02-10: 1.2 Fixed an issue by which the external file wasn't loaded
@@ -17,9 +18,9 @@ import subprocess    # Subprocess management
 import sys           # System-specific parameters and functions
 
 # Global variables
-__version__ = "1.3.1"
-__build__ = "20230515"
-CFGFILE = os.path.abspath(os.path.dirname(__file__)) + '/hhs2.cfg'
+__version__ = "1.3.2"
+__build__ = "20230516"
+CFGFILE = os.path.abspath(os.path.dirname(__file__)) + '/hhs2.json'
 
 # https://svn.blender.org/svnroot/bf-blender/trunk/blender/build_files/scons/tools/
 class bcolors:
