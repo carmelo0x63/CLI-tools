@@ -1,1 +1,5 @@
-{"svr1": port1, "svr2": port2, "svr3": port3}
+{
+  "svr1": port1,
+  "svr2": port2,
+  "svr3": port3
+}

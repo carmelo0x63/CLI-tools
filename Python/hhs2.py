@@ -39,19 +39,19 @@ def pingscan(host, ipaddr):
 
     if stderr == b'':
         if b'1 packets received' in stdout:
-            print(bcolors.OKGREEN + '[+]' + bcolors.ENDC + ' Host ' + host + ' (' + ipaddr + ') is UP')
+            print(bcolors.OKGREEN + '[+]' + bcolors.ENDC + ' ' + host + ' [' + ipaddr + '] is UP')
         else:
-            print(bcolors.WARNING + '[-]' + bcolors.ENDC + ' Host ' + host + ' is unreachable')
+            print(bcolors.WARNING + '[-]' + bcolors.ENDC + ' ' + host + ' is unreachable')
     else:
-        print('[!] ERROR: ' + stdout.decode())
+        print(bcolors.FAIL + '[!]' + bcolors.ENDC + ' ERROR: ' + stdout.decode())
 
 
-def scan22(host, ipaddr, port):
+def tcpscan(host, ipaddr, port):
     process = subprocess.Popen(['nc', '-w1', '-G1', ipaddr, str(port)], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     stdout, stderr = process.communicate()
 
     if stderr == b'':
-        print(bcolors.OKGREEN + '[+]' + bcolors.ENDC + ' Host ' + host + ' (' + ipaddr + ':' + str(port) + ') ' + ': ' + str(stdout))
+        print(bcolors.OKGREEN + '[+]' + bcolors.ENDC + ' ' + host + ' [' + ipaddr + ':' + str(port) + ']' + ': ' + stdout.decode().strip())
     else:
         print(bcolors.WARNING + '[!]' + bcolors.ENDC + ' ERROR: ' + stdout.decode())
 
@@ -61,20 +61,20 @@ def iterate(mode):
         try:
             ipaddr = socket.gethostbyname(host)
         except:
-            print(bcolors.FAIL + '[!]' + bcolors.ENDC + ' Host ' + host + ' is NOT available')
+            print(bcolors.FAIL + '[!]' + bcolors.ENDC + ' ' + host + ' is NOT available')
             continue
 
         if (mode == 1):
             pingscan(host, ipaddr)
 
         if (mode == 2):
-            scan22(host, ipaddr, HOSTS[host])
+            tcpscan(host, ipaddr, HOSTS[host])
 
 
 def main():
     parser = argparse.ArgumentParser(description='HomeHostS2: pings a list of hosts to check their up/down status, version ' + __version__ + ', build ' + __build__ + '.')
     parser.add_argument('-p', '--ping', action='store_true', help='Ping (ICMP) hosts')
-    parser.add_argument('-s', '--ssh', action='store_true', help='Attempts OS detection through TCP/22')
+    parser.add_argument('-t', '--tcp', action='store_true', help='TCP scan on configurable port(s)')
     parser.add_argument('-v', '--version', action='version', version='%(prog)s ' + __version__)
 
     # In case of no arguments print help message then exits
@@ -93,8 +93,8 @@ def main():
         print(bcolors.OKGREEN + '>>>' + bcolors.ENDC + ' Starting ICMP (ping) scan...')
         iterate(1)
 
-    if args.ssh:
-        print(bcolors.OKGREEN + '>>>' + bcolors.ENDC + ' Starting TCP port 22 scan...')
+    if args.tcp:
+        print(bcolors.OKGREEN + '>>>' + bcolors.ENDC + ' Starting TCP scan...')
         iterate(2)
 
 
