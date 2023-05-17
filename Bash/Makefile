@@ -8,7 +8,7 @@ diffexact :
 	for FILE in $$(ls *sh); do diff $${FILE} ~/scripts/$${FILE}; done ;\
 
 install :
-	cp -u *sh ~/scripts/
+	cp -u *sh *tmpl ~/scripts/
 
 installmacos :
 	install *sh ~/scripts/
