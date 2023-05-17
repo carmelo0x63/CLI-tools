@@ -1,0 +1,52 @@
+# version=RHEL9
+# Created by kscustomizer.sh
+# Use graphical/text install
+#graphical
+text
+reboot
+
+repo --name="Minimal" --baseurl="file:///run/install/sources/mount-0000-cdrom/Minimal"
+
+%addon com_redhat_kdump --disable
+%end
+
+# Keyboard layouts
+keyboard --xlayouts='us'
+# System language
+lang en_US.UTF-8
+
+# Network information
+network  --bootproto="static" --device="ens2" --gateway="198.51.100.1" --ip="THISIPADDR2" --nameserver="198.51.100.1" --netmask="255.255.255.0" --ipv6="auto" --activate
+network  --bootproto="static" --device="ens3" --gateway="192.0.2.254" --ip="THISIPADDR1" --nameserver="192.0.2.254" --netmask="255.255.255.0" --ipv6="auto" --activate
+network  --hostname="THISHOSTNAME.network.mw"
+
+skipx
+firstboot --disable
+selinux --enforcing
+firewall --enabled --ssh
+
+# Use CDROM installation media
+cdrom
+
+%packages
+@^minimal-environment
+%end
+
+# Run the Setup Agent on first boot
+firstboot --enable
+
+ignoredisk --only-use="sda"
+autopart
+# Partition clearing information
+clearpart --none --initlabel
+
+timesource --ntp-server="193.204.114.232"
+timesource --ntp-server="193.204.114.233"
+
+# System timezone
+timezone Europe/Rome --utc
+
+# Root password
+rootpw --iscrypted $6$QN7kGtjxW/Zs8zmu$j/cPDh/Mrdxo10TIIOeJ2EJzSWGUPVLOqNuSVMiGGZQpYgsyV8VMv09kHTyzLcE4zumFK.trQoWREhwIyXDTj/
+user --groups="wheel" --name="tuser" --password="$6$t3rHnBS5WEBarJPN$21YfwtVOyUBPgwjlazYQT9zO1D4ZhkL2jsHxfEe0tjFNfUW9MvyO3.P1Djcliu0oAx4Jo9sWVGVolQctdWhKx." --iscrypted --gecos="Test User"
+
