@@ -19,7 +19,7 @@ read IPADDR2
 
 echo -n "[!] Generating 'ks-${HOSTNAME}.cfg' from template... "
 cp "$SCRIPT_DIR/$TEMPLATENAME" "ks-${HOSTNAME}.cfg"
-sed -i "s/THISHOSTNAME/${HOSTNAME}/" "ks-${HOSTNAME}.cfg"
+sed -i "s/THISHOSTNAME/${HOSTNAME}-kvm/" "ks-${HOSTNAME}.cfg"
 echo "done!"
 
 echo -n "[!] Customizing 1st interface... "
