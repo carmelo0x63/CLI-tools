@@ -12,8 +12,8 @@ SEC=5                                        # Countdown timer initial value
 #VCPUS=1                                      # CPU Cores count
 OS_TYPE="linux"                              # OS type
 #OS_VARIANT="generic"                         # List with osinfo-query os
-IMAGES_DIR="/var/lib/libvirt/images/"        # Path to images directory
-ISO_DIR="/var/lib/libvirt/images2/"          # Path to ISO directory
+IMAGES_DIR="/var/lib/libvirt/images"         # Path to images directory
+ISO_DIR="/var/lib/libvirt/images2"           # Path to ISO directory
 ISO_FILE="AlmaLinux-9.2-x86_64-minimal.iso"  # Path to ISO file
 
 echo -en "Enter Kickstart file name (e.g. 'ks-xxx-yyy.cfg'): "
