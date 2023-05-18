@@ -31,12 +31,14 @@ sed -i "s/THISIPADDR2/${IPADDR2}/" "ks-${HOSTNAME}.cfg"
 echo "done!"
 
 echo "[+] Customization complete!"
+echo "[+] Destination directory: ${DESTDIR}"
 
 if [ -f "$DESTDIR/ks-${HOSTNAME}.cfg" ]; then
-    echo "[-] $DESTDIR/ks-${HOSTNAME}.cfg is already present"
-    echo "[-] Skipping copy/move!!!"
+    echo "[-] File 'ks-${HOSTNAME}.cfg' is already present"
+    echo "[-] Overwriting not allowed!!!"
+    echo "[-] Terminating!!!"
 else
-    echo "[+] ks-${HOSTNAME}.cfg does not exist inside the destination directory"
+    echo "[+] 'ks-${HOSTNAME}.cfg' does not exist... OK!"
     echo -n "[+] Moving file into $DESTDIR... "
     mv "ks-${HOSTNAME}.cfg" "${DESTDIR}"
     echo "OK!"
