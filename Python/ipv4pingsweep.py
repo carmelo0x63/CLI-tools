@@ -3,6 +3,7 @@
 # author: Carmelo C
 # email: carmelo.califano@gmail.com
 # history, date format ISO 8601:
+#  2023-05-31: 1.1 improved UP/DOWN logic
 #  2022-07-10: 1.0 initial version
 # Adapted from: https://github.com/gh0x0st/python3_multithreading
 # Useful link(s): https://gist.github.com/sourceperl/10288663
@@ -16,9 +17,16 @@ import sys              # System-specific parameters and functions
 import threading        # Thread-based parallelism
 import time             # Time access and conversions
 
+# Settings
+ICMPCOUNT = '1'
+ICMPWAIT = '1'
+OKSTRING1 = ' 0% packet loss'
+OKSTRING2 = ' 0.0% packet loss'
+
 # Version number
-__version__ = '1.0'
-__build__ = '20220710'
+__version__ = '1.1'
+__build__ = '20230531'
+
 
 def worker():
     while True:
@@ -28,9 +36,9 @@ def worker():
 
 
 def send_ping(target):
-    icmp = subprocess.Popen(['ping', '-c', '1', '-W', '1', str(target)], stdout = subprocess.PIPE, stderr = subprocess.PIPE).communicate()
+    icmp_response = subprocess.Popen(['ping', '-c', ICMPCOUNT, '-W', ICMPWAIT, str(target)], stdout = subprocess.PIPE, stderr = subprocess.PIPE).communicate()
     with thread_lock:
-        if '0% packet loss' in icmp[0].decode('utf-8'):
+        if OKSTRING1 in icmp_response[0].decode('utf-8') or OKSTRING2 in icmp_response[0].decode('utf-8'):
             print(f'[+] {target} is UP')
         else:
             if IS_VERBOSE:
