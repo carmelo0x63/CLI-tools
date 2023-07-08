@@ -27,6 +27,18 @@ __version__ = '1.2'
 __build__ = '20230708'
 
 
+# https://svn.blender.org/svnroot/bf-blender/trunk/blender/build_files/scons/tools/
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
+
 def worker():
     while True:
         target = q.get()
@@ -38,17 +50,18 @@ def send_ping(target):
     icmp_response = subprocess.call(['ping', '-c', ICMPCOUNT, '-W', ICMPWAIT, str(target)], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
     with thread_lock:
         if icmp_response == 0: 
-            print(f'[+] {target} is UP')
+            print(bcolors.OKGREEN + '[+]' + bcolors.ENDC + f' {target} is UP')
         else:
             if IS_VERBOSE:
-                print(f'[-] {target} is DOWN')
+#                print(f'[-] {target} is DOWN')
+                print(bcolors.FAIL + '[-]' + bcolors.ENDC + f' {target} is UP')
 
 
 def main():
     parser = argparse.ArgumentParser(description='IPv4 ping/ICMP sweeper, version ' + __version__ + ', build ' + __build__ + '.')
-    parser.add_argument('-s', '--subnet', metavar = '<subnet>', type = str, help = 'Subnet as aa.bb.cc.dd/xx, in case of no subnet mask xx = 32')
-    parser.add_argument('-t', '--threads', metavar = '<threads>', type = int, help = 'Number of threads (default = 10)')
-    parser.add_argument('-v', '--verbose', action = 'store_true', help = 'Print extended information')
+    parser.add_argument('-s', '--subnet', metavar = '<subnet>', type = str, help = 'subnet as aa.bb.cc.dd/xx, in case of no subnet mask xx = 32')
+    parser.add_argument('-t', '--threads', metavar = '<threads>', type = int, help = 'number of threads (default = 10)')
+    parser.add_argument('-v', '--verbose', action = 'store_true', help = 'print extended information')
     parser.add_argument('-V', '--version', action = 'version', version = '%(prog)s ' + __version__)
 
     # In case of no arguments shows help message
