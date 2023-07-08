@@ -3,6 +3,7 @@
 # author: Carmelo C
 # email: carmelo.califano@gmail.com
 # history, date format ISO 8601:
+#  2023-07-07: 1.2 UP/DOWN logic, replaced subprocess.Popen w/ subprocess.call
 #  2023-05-31: 1.1 improved UP/DOWN logic
 #  2022-07-10: 1.0 initial version
 # Adapted from: https://github.com/gh0x0st/python3_multithreading
@@ -20,12 +21,10 @@ import time             # Time access and conversions
 # Settings
 ICMPCOUNT = '1'
 ICMPWAIT = '1'
-OKSTRING1 = ' 0% packet loss'
-OKSTRING2 = ' 0.0% packet loss'
 
 # Version number
-__version__ = '1.1'
-__build__ = '20230531'
+__version__ = '1.2'
+__build__ = '20230708'
 
 
 def worker():
@@ -36,9 +35,9 @@ def worker():
 
 
 def send_ping(target):
-    icmp_response = subprocess.Popen(['ping', '-c', ICMPCOUNT, '-W', ICMPWAIT, str(target)], stdout = subprocess.PIPE, stderr = subprocess.PIPE).communicate()
+    icmp_response = subprocess.call(['ping', '-c', ICMPCOUNT, '-W', ICMPWAIT, str(target)], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
     with thread_lock:
-        if OKSTRING1 in icmp_response[0].decode('utf-8') or OKSTRING2 in icmp_response[0].decode('utf-8'):
+        if icmp_response == 0: 
             print(f'[+] {target} is UP')
         else:
             if IS_VERBOSE:
