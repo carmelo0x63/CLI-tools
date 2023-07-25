@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
-# Generates a Virtualm Machine from a given Kickstart file` 
+# Generates a Virtual Machine from a given Kickstart file` 
 # author: Carmelo C
 # email: carmelo.califano@gmail.com
 # history, date format ISO 8601:
+#  2023-07-25: Removed '--os-type'
 #  2023-05-17: First release
 
 # Settings
@@ -10,7 +11,7 @@ DESTDIR="$HOME/KVM"                          # Kickstart files repository
 SEC=5                                        # Countdown timer initial value
 #MEM_SIZE=1024                                # Memory setting in MiB
 #VCPUS=1                                      # CPU Cores count
-OS_TYPE="linux"                              # OS type
+#OS_TYPE="linux"                              # OS type
 #OS_VARIANT="generic"                         # List with osinfo-query os
 IMAGES_DIR="/var/lib/libvirt/images"         # Path to images directory
 ISO_DIR="/var/lib/libvirt/images2"           # Path to ISO directory
@@ -54,7 +55,7 @@ echo "Installing with the following parameters:"
 echo "  domain name: ${DOMNAME}"
 echo "  RAM size: ${MEM_SIZE}"
 echo "  number of vCPU's: ${VCPUS}"
-echo "  OS type: ${OS_TYPE}"
+#echo "  OS type: ${OS_TYPE}"
 echo "  OS variant: ${OS_VARIANT}"
 echo "  disk: ${IMAGES_DIR}/${DOMNAME}.qcow2"
 echo "  disk size: ${DISK_SIZE}"
@@ -71,7 +72,7 @@ sudo virt-install \
     --name ${DOMNAME} \
     --memory ${MEM_SIZE} \
     --vcpus ${VCPUS} \
-    --os-type ${OS_TYPE} \
+#    --os-type ${OS_TYPE} \
     --os-variant ${OS_VARIANT} \
     --disk path=${IMAGES_DIR}/${DOMNAME}.qcow2,size=${DISK_SIZE} \
     --location ${ISO_DIR}/${ISO_FILE} \
