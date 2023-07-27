@@ -35,7 +35,8 @@ cdrom
 # Run the Setup Agent on first boot
 firstboot --enable
 
-ignoredisk --only-use="sda"
+# NOTE: 'vda' is recommended on a Debian-based host, 'sda' may be required on RH and its derivatives
+ignoredisk --only-use="vda"
 autopart
 # Partition clearing information
 clearpart --none --initlabel
