@@ -1,0 +1,219 @@
+Received: from SJ2PR11MB8421.namprd11.prod.outlook.com (2603:10b6:a03:549::9)
+ by DM4PR11MB5423.namprd11.prod.outlook.com with HTTPS; Sun, 17 Sep 2023
+ 22:39:57 +0000
+Received: from SN7PR04CA0165.namprd04.prod.outlook.com (2603:10b6:806:125::20)
+ by SJ2PR11MB8421.namprd11.prod.outlook.com (2603:10b6:a03:549::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6792.24; Sun, 17 Sep
+ 2023 22:39:56 +0000
+Received: from SA2PEPF000015C8.namprd03.prod.outlook.com
+ (2603:10b6:806:125:cafe::2b) by SN7PR04CA0165.outlook.office365.com
+ (2603:10b6:806:125::20) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6792.26 via Frontend
+ Transport; Sun, 17 Sep 2023 22:39:55 +0000
+Authentication-Results: spf=pass (sender IP is 173.37.142.92)
+ smtp.mailfrom=cisco.com; dkim=pass (signature was verified)
+ header.d=cisco.com;dmarc=pass action=none header.from=cisco.com;
+Received-SPF: Pass (protection.outlook.com: domain of cisco.com designates
+ 173.37.142.92 as permitted sender) receiver=protection.outlook.com;
+ client-ip=173.37.142.92; helo=alln-iport-5.cisco.com; pr=C
+Received: from alln-iport-5.cisco.com (173.37.142.92) by
+ SA2PEPF000015C8.mail.protection.outlook.com (10.167.241.198) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.6792.20 via Frontend Transport; Sun, 17 Sep 2023 22:39:55 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=cisco.com; i=@cisco.com; l=2493; q=dns/txt; s=iport;
+  t=1694990395; x=1696199995;
+  h=from:to:subject:date:message-id:mime-version;
+  bh=g6vsCrbSSp05UxKhRNn1bK4JfVDW874Xma9fQYlP+2I=;
+  b=mx6v+So8ickTwL6EZRJnFnKgApsTy4WuYp8Kp/SAP/onE/T/3vRpEJO5
+   evNA7IGM75DY6nzdjuVdhSN20YHbLLXkoP7DJ1TJjuvDFBB6g0lkEDcM7
+   iYmV3Y+eWzZ/vxOtAtgY+PNpvA/bce90ybD9+Xo95ljgIV0Y0BE1lBq/x
+   4=;
+X-CSE-ConnectionGUID: fKokrH5pQOCsWkcfOuYFLQ==
+X-CSE-MsgGUID: /uBi0i9vQLKu4KmEQ69F/g==
+Received: from rcdn-core-11.cisco.com ([173.37.93.147])
+  by alln-iport-5.cisco.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Sep 2023 22:39:51 +0000
+Received: from alln-opgw-4.cisco.com (alln-opgw-4.cisco.com [173.37.147.252])
+	by rcdn-core-11.cisco.com (8.15.2/8.15.2) with ESMTPS id 38HMdpgr024874
+	(version=TLSv1.2 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+	for <css_security@cisco.com>; Sun, 17 Sep 2023 22:39:51 GMT
+X-CSE-ConnectionGUID: DwNNstxnQdeRuw2KPbG3Jg==
+X-CSE-MsgGUID: TDrTI9HcQpOeITPu02TRoQ==
+Authentication-Results-Original: alln-opgw-4.cisco.com; dkim=pass (signature
+ verified) header.i=@cisco.com; spf=Pass smtp.mailfrom=hirdesai@cisco.com;
+ dmarc=pass (p=quarantine dis=none) d=cisco.com
+X-IronPort-AV: E=Sophos;i="6.02,155,1688428800"; 
+   d="scan'208,217";a="2127990"
+Received: from mail-dm6nam04lp2045.outbound.protection.outlook.com (HELO NAM04-DM6-obe.outbound.protection.outlook.com) ([104.47.73.45])
+  by alln-opgw-4.cisco.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Sep 2023 22:39:51 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=YX5vcf7J9c67AZ18DpJWghWRr1HOV87qGbwNg+gqz8xxcjcpzIB+NyORS6qvDZgyUqRL523jjX8ufsDOSYxJ78LG+V/qStOlQUVA4NuUNfTVqgtBovADo9n9h8H67siCNy2/gF9ez99o1cnNnU/Us1wzB8IeCruTF6N7HS1bw521Qa7W7zv5ht/0hbzI7H88XCoIum0b1K2MT+IjUTGekBh6Yz+9RINz1pJxb7iMH6Eai+a3FBwt5aIUCM+NOsSzkCD4+4TY1dLHTYWAFss8lBL3J2c+WIcxD6WMVmc9kUC8VQwbGiOx3/it/+q3IIAqPXSG7C4tqjjd0StXr6u/hQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=8G2y63zC7d/R+loga7Chp2Weg+imCmlG9qrzWXBJkw8=;
+ b=E1T1bVDqPw3NvD4jPA1+AvQzvG9cdXJi1VWKuQMuE0hnCj5gqnCkhBKhEffnQe1vRVWbwxk5KYt/2K/FQfa9uS+Qk42slePRQBX7AjSgopp+IoSUZHcZAkZFqbVKnzFc+TBxyOKoMQM9EjZsIuQiTwKMOY2gw/68Z2GvphCKRNP0NqrAhLv8a09+c66iRg1nvDHbvh97zR0nPpLGXB2Zwh+il4N0Q8fbxEa8ECrK+JoCmHzmwbGPxAWhVnqg/zxeGQhhA6zx/5fkeJaxOn23Eh/uk+zlaXC57SEiF6oIkoNwQCF2V7uUs9pkCcke4kJ5leyl9ecwfWwAg85pPCa8KA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=cisco.com; dmarc=pass action=none header.from=cisco.com;
+ dkim=pass header.d=cisco.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cisco.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=8G2y63zC7d/R+loga7Chp2Weg+imCmlG9qrzWXBJkw8=;
+ b=Pd6cVB4MzQpzp6jx9RL1qGckNcxNrT1xtGmt2St/Gh2b8sVdrZ/rAfwWnAGxtVKUg9Hg5CEOLZ2XmqOliswVjmvh4HV04rFNXsA1EhflBz1oBeJNX6nhDcjC3TZbYwEYdcGdCRJvjZeKf8/bZcTcKMYbTYrH+bj3SnkjaZbPAkE=
+Received: from IA1PR11MB8200.namprd11.prod.outlook.com (2603:10b6:208:454::6)
+ by SA1PR11MB7700.namprd11.prod.outlook.com (2603:10b6:806:330::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6792.24; Sun, 17 Sep
+ 2023 22:39:49 +0000
+Received: from IA1PR11MB8200.namprd11.prod.outlook.com
+ ([fe80::76e6:8677:b0c2:d5ac]) by IA1PR11MB8200.namprd11.prod.outlook.com
+ ([fe80::76e6:8677:b0c2:d5ac%7]) with mapi id 15.20.6792.024; Sun, 17 Sep 2023
+ 22:39:49 +0000
+From: "Hiren Desai (hirdesai)" <hirdesai@cisco.com>
+To: "Hiren Desai (hirdesai)" <hirdesai@cisco.com>
+Subject: Security Suites - Level 100 training - please review and complete
+Thread-Topic: Security Suites - Level 100 training - please review and
+ complete
+Thread-Index: Adnpt5PnDeotBN9XS+WIGk6P53WlWw==
+Date: Sun, 17 Sep 2023 22:39:49 +0000
+Message-ID:
+ <IA1PR11MB82002EFBDFD0CFAFFFBF9103C9F4A@IA1PR11MB8200.namprd11.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-Auto-Response-Suppress: DR, OOF, AutoReply
+X-Auto-Response-Suppress: DR, OOF, AutoReply
+X-MS-TNEF-Correlator:
+x-ms-traffictypediagnostic:
+ IA1PR11MB8200:EE_|SA1PR11MB7700:EE_|SA2PEPF000015C8:EE_|SJ2PR11MB8421:EE_|DM4PR11MB5423:EE_
+X-MS-Office365-Filtering-Correlation-Id: 971bea86-32a2-4d15-4d6f-08dbb7cf0436
+x-ld-processed: 5ae1af62-9505-4097-a69a-c1553ef7840e,ExtAddr
+X-Microsoft-Antispam-Untrusted: BCL:0;
+X-Microsoft-Antispam-Message-Info-Original:
+ rIRc3fZ2vm9GytK/zHO2JgZ6K0OXr1VivqNVojKQxbThzYs1whcvTGj9ssg9oNkkDXFgtPQkCtn9Z+YodSgjL0WT8xMfiH2+9XUwiToefsMN3voFDbwXN9hUjndsn8x0IIz+jcICEcjuOLbfEkysrz80wjv5S1GaCOYl+ickZyzuIPEJ+bCvZUbvwlPQttfL/+qUqJwqEF0m/8jUMS+OVBIT3nQ0FIcm80y/hzDax3pOHInCY1kSNRS3t2fwD1QC0/OmIR5fpQNAODbTWNib6xhlpvlGOcRGc8o5F8ytQP7ed+/FCfD8Bn/KF/1hVfNu9T6l8Jv0/zjYfJUEPwc4qzlSmqUynkOx6h6e1lVJP8DQ8wvLAjextOJrqW2+UlYSmGcss3vxyOuTifR+ivZRLrliSGswztxV586QppnSigxG7DFhKfe6o2JYgb3kIh/VlOXR6KXA3WWoy8At+hO9WQUFsSDwUfxeBvSXKtuAVLtEQkUFiG4vdwOLpoIOpaGRU/qtCeMNbApOmwBR3t+/WhtiVBfsAnTzc8DBDHThM86E+2WfBqvcE7rQZP2ZMyA0nWZFEBng+wOHp9K1vzQbX7NR+vJvUf2xIjeUGuHGYlcYOGbvDwn7xhpALNfAO9Rhy2/8W53Mq+b4paqjc66EE3u55JuDfaDyweAiORlGPOE=
+X-Forefront-Antispam-Report-Untrusted:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:IA1PR11MB8200.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:;DIR:INT;
+Content-Type: multipart/alternative;
+	boundary="_000_IA1PR11MB82002EFBDFD0CFAFFFBF9103C9F4AIA1PR11MB8200namp_"
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR11MB7700
+X-OrganizationHeadersPreserved: SA1PR11MB7700.namprd11.prod.outlook.com
+X-Outbound-SMTP-Client: 173.37.147.252, alln-opgw-4.cisco.com
+X-Outbound-Node: rcdn-core-11.cisco.com
+Return-Path: owner-css_security_emear@cisco.com
+X-MS-Exchange-Organization-ExpirationStartTime: 17 Sep 2023 22:39:55.9838
+ (UTC)
+X-MS-Exchange-Organization-ExpirationStartTimeReason: OriginalSubmit
+X-MS-Exchange-Organization-ExpirationInterval: 1:00:00:00.0000000
+X-MS-Exchange-Organization-ExpirationIntervalReason: OriginalSubmit
+X-MS-Exchange-Organization-Network-Message-Id:
+ 971bea86-32a2-4d15-4d6f-08dbb7cf0436
+X-EOPAttributedMessage: 0
+X-MS-Exchange-Organization-MessageDirectionality: Originating
+X-MS-Exchange-Organization-AuthAs: Internal
+X-MS-Exchange-Organization-AuthMechanism: 04
+X-MS-Exchange-Organization-AuthSource: IA1PR11MB8200.namprd11.prod.outlook.com
+X-MS-Exchange-Organization-SCL: 1
+X-MS-Exchange-Organization-Recipient-P2-Type: Bcc
+X-CrossPremisesHeadersPromoted: SA2PEPF000015C8.namprd03.prod.outlook.com
+X-CrossPremisesHeadersFiltered: SA2PEPF000015C8.namprd03.prod.outlook.com
+X-MS-Exchange-Transport-CrossTenantHeadersStripped:
+ SA2PEPF000015C8.namprd03.prod.outlook.com
+X-MS-PublicTrafficType: Email
+X-OriginatorOrg: cisco.onmicrosoft.com
+X-MS-Office365-Filtering-Correlation-Id-Prvs:
+ 55a1e150-0963-46a3-e70f-08dbb7cf003b
+X-Microsoft-Antispam: BCL:0;
+X-Forefront-Antispam-Report:
+ CIP:173.37.142.92;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:alln-iport-5.cisco.com;PTR:alln-iport-5.cisco.com;CAT:NONE;SFS:;DIR:INT;
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Sep 2023 22:39:55.8900
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 971bea86-32a2-4d15-4d6f-08dbb7cf0436
+X-MS-Exchange-CrossTenant-Id: 5ae1af62-9505-4097-a69a-c1553ef7840e
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=5ae1af62-9505-4097-a69a-c1553ef7840e;Ip=[173.37.142.92];Helo=[alln-iport-5.cisco.com]
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: IA1PR11MB8200.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR11MB8421
+X-MS-Exchange-Transport-EndToEndLatency: 00:00:01.7109595
+X-MS-Exchange-Processed-By-BccFoldering: 15.20.6792.025
+X-Microsoft-Antispam-Mailbox-Delivery:
+	ucf:0;jmr:0;auth:0;dest:I;ENG:(910001)(920097)(425001)(930097)(140003);
+X-Microsoft-Antispam-Message-Info:
+	BVhch6GOAGdn+bEh6XRZAm+ldXwRAPeoA0w/UIlcrpLsMQLwjX8JJF1xwkBVC9vu2rTZe4q91gR8BTVw/q7lPG0dW4H8i0zPa5tgpl/nkYeNL7zYiEDxFEbPoFspxVoJ+vlY8Ksd4WzXBssoRW2jgDMOw76LFO5FaT97ts/6tVk+hKaeJbI++3bC5CoXNeNqwZ3OL3K5O/H7ud5WGFT5Pf8pXeb4shqIYk6Yl3htAWrmr0RbE8wqROHebBoilXnEN3ZCszQlBo5Jxf/u5vkSPZhbrdxC0xtrBQRFIm3m/VL9EEGVP+jgmDdnwygA+D4Hbr2SXJVlCAXISTyIqAAeHWBVwWxf4GpjyK0vr/QdLen4ryC7vEBvOg33DdDKvk7qjwD+Hyp2FtwHfHAPYrCoBlkHd4OewUtgd9czKuIw1Ratb9MUAdwhN3MRs5n+yFxRpzp8iuioB3V+jrqoP6fxbyrlITlKc6CSlygD/3QPTNm9SLo1oxL99C1KRgHmOsn8zszIgsk21Il/SU20TBR9gfDyAFK4clhWOFDpyRBfdq3vZiLiVAd8X7RRlWjLPkz1Z7xUTx4NTTPlC+TpGMUqklWaVda0QVboFEqwJFCv/ATDabZ2iGfzKZypU+YubkaYKW/PsTJR6tvn1q38QVymVkBHVkcwSVnFFPrryS6lB508IPG0ASh/uZAYAAWggpJk6xXsnqXf1cIkmIEfP4n+sLp+PGIrMwuw9j2+v5CiNrp38amBW7SCAPCDc/YM5EwF
+MIME-Version: 1.0
+
+--_000_IA1PR11MB82002EFBDFD0CFAFFFBF9103C9F4AIA1PR11MB8200namp_
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+Team - Please review and complete the L100 Security Suites training at http=
+s://degreed.com/pathway/7pv1re259r/pathway
+
+Thanks
+Hiren
+
+--_000_IA1PR11MB82002EFBDFD0CFAFFFBF9103C9F4AIA1PR11MB8200namp_
+Content-Type: text/html; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40"><head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+>
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;
+	mso-ligatures:standardcontextual;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-family:"Calibri",sans-serif;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"EN-US" link=3D"#0563C1" vlink=3D"#954F72" style=3D"word-wrap:=
+break-word">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal">Team &#8211; Please review and complete the L100 Sec=
+urity Suites training at
+<a href=3D"https://degreed.com/pathway/7pv1re259r/pathway">https://degreed.=
+com/pathway/7pv1re259r/pathway</a><o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Thanks<o:p></o:p></p>
+<p class=3D"MsoNormal">Hiren<o:p></o:p></p>
+</div>
+</body>
+</html>
+
+--_000_IA1PR11MB82002EFBDFD0CFAFFFBF9103C9F4AIA1PR11MB8200namp_--

@@ -3,6 +3,7 @@
 # author: Carmelo C
 # email: carmelo.califano@gmail.com
 # history:
+#  2023-09-20: 1.1 output column-formatted and cleaned-up
 #  2023-03-08: 1.0 initial version
 
 # Import some modules
@@ -11,21 +12,31 @@ import email        # An email and MIME handling package
 import sys          # System-specific parameters and functions
 
 # Version number
-__version__ = "1.0"
-__build__ = "20230308"
+__version__ = "1.1"
+__build__ = "20230920"
 
 # Global variables
 BASICHEADERS = ['Delivered-To', 'Return-Path', 'From', 'Reply-To', 'To', 'Subject', 'Date']
 
+
 def parseBasicHeaders(msg):
     for header in BASICHEADERS:
-        print(f'[+] {header}:\t', end= '')
+        print(f'[+] {header:12}:  ', end= '')
         print(msg[header])
 
+
 def parseAllHeaders(msg):
+    maxCol = 1
+    for key in msg.keys():
+        maxLen = len(key)
+        if maxLen > maxCol:
+            maxCol = maxLen
+    maxCol += 2
+
     for header in msg.keys():
-        print(f'[+] {header}:\t', end= '')
-        print(msg[header])
+        print('{:<{maxCol}}'.format(header + ':', maxCol=maxCol), end= '')
+        print(msg[header].replace('\n', ''))
+
 
 def main():
     parser = argparse.ArgumentParser(description='Scans .eml files for headers and info, summarizes important info, version ' + __version__ + ', build ' + __build__ + '.')
@@ -47,7 +58,7 @@ def main():
     try:
         emlFile = open(fileName, 'r')
     except IOError:
-        print("[-] Filename \"" + fileName + "\" not found!!!", end = '\n\n')
+        print(f'[-] Filename \"{fileName}\" not found!!!', end = '\n\n')
         sys.exit(2)
 
     msg = email.message_from_file(emlFile)
