@@ -10,8 +10,8 @@
 #set -x
 
 # Settings
-#CERTDIR="$HOME/Private CA/root-ca"
-CERTDIR="$HOME/Documents/Personal/Home Lab/myBackups/Private CA/root-ca"
+CERTDIR="$HOME/Private CA/root-ca"
+#CERTDIR="$HOME/Documents/Personal/Home Lab/myBackups/Private CA/root-ca"
 
 # ANSI colors
 RED="\033[0;31m"
