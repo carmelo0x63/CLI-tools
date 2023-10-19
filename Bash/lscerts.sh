@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Lists X.509 PEM certificates in a given directory
+# Lists X.509 ASCII/Base64 certificates in a given directory
 # author: Carmelo C
 # email: carmelo.califano@gmail.com
 # history, date format ISO 8601:
@@ -12,6 +12,7 @@
 
 # Settings
 VERSION="1.1"
+EXTLIST=(pem crt)
 
 # ANSI colors
 RED="\033[0;31m"
@@ -33,7 +34,8 @@ listcerts() {
             echo -e "${GREEN}[+]${NC} Target directory: ${CERTDIR}"
             echo -e "${GREEN}[+]${NC} Certificate directory found..."
         fi
-        for CERT in "${CERTDIR}/"*pem; do
+        for CERT in "${CERTDIR}/"*"${1}"; do
+            [ -f "$CERT" ] || continue
             echo -e "${GREEN}[+]${NC} $CERT"
             openssl x509 -in "${CERT}" -text -noout | egrep "Issuer:|Subject:"
             if [ "$VERBOSE" -gt 0 ]; then
@@ -57,13 +59,17 @@ while getopts ":hc:v:V" opt; do
     c ) # compact
       VERBOSE=0
       CERTDIR=$OPTARG
-      listcerts
+      for EXTENSION in "${EXTLIST[@]}"; do
+          listcerts $EXTENSION
+      done
       exit 0
       ;;
     v ) # verbose
       VERBOSE=1
       CERTDIR=$OPTARG
-      listcerts
+      for EXTENSION in "${EXTLIST[@]}"; do
+          listcerts $EXTENSION
+      done
       exit 0
       ;;
     V ) # Version
