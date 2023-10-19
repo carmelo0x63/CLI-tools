@@ -15,7 +15,8 @@ GREEN="\033[0;32m"
 NC="\033[0m"         # No Color
 
 usage() {
-    echo "Usage: ${0##*/} [command] key1 key2"
+    echo "Usage: ${0##*/} [command] <key1> <key2>"
+    echo "Command list:"
     echo -e "\t-h: Help"
     echo -e "\t-c: Compare keypair\n"
 }

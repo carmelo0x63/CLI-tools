@@ -24,7 +24,8 @@ GREEN="\033[0;32m"
 NC="\033[0m"         # No Color
 
 usage() {
-    echo "Usage: ${0##*/} [option] [comma-separated IPs]"
+    echo "Usage: ${0##*/} [option] <comma-separated IPs>"
+    echo "Command list:"
     echo -e "\t-h: Help"
     echo -e "\t-p [comma-separated IPs]: Ping (ICMP) the targets hosts"
     echo -e "\t-d [comma-separated IPs]: Test port 53 by sending one sample query"
