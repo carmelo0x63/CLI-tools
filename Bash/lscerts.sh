@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 # Lists X.509 ASCII/Base64 certificates in a given directory
+# Tested with:
+# - Linux: OpenSSL 3.0.11
+# - macOS: OpenSSL 3.1.4
 # author: Carmelo C
 # email: carmelo.califano@gmail.com
 # history, date format ISO 8601:
