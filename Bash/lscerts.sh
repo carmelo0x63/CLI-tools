@@ -3,6 +3,7 @@
 # author: Carmelo C
 # email: carmelo.califano@gmail.com
 # history, date format ISO 8601:
+#  2023-11-10: Added a fix to remove trailing "/" if present in CERTDIR
 #  2023-10-19: Hardcoded target directory replaced with input argument
 #  2023-10-12: First release
 
@@ -11,7 +12,7 @@
 #set -x
 
 # Settings
-VERSION="1.1"
+VERSION="1.2"
 EXTLIST=(pem crt)
 
 # ANSI colors
@@ -29,6 +30,11 @@ usage() {
 }
 
 listcerts() {
+    # Removes trailing "/" if present
+    if [ ${CERTDIR:(-1)} = "/" ]; then
+        CERTDIR=${CERTDIR%?}
+    fi
+
     if [ -d "${CERTDIR}" ]; then
         if [ "$VERBOSE" -gt 0 ]; then
             echo -e "${GREEN}[+]${NC} Target directory: ${CERTDIR}"
