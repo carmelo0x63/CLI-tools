@@ -3,11 +3,13 @@
 # author: Carmelo C
 # email: carmelo.califano@gmail.com
 # history, date format ISO 8601:
+#  2023-11-16: Subnet name moved to a global variable, default IPADDR*
 #  2023-05-19: if-then split and re-ordered
 #  2023-05-17: First release
 
 TEMPLATENAME="ks-template-v9.tmpl"
 DESTDIR="$HOME/KVM"
+SUBNETNAME="c2.homelab.test"
 # source: https://stackoverflow.com/questions/59895/how-do-i-get-the-directory-where-a-bash-script-is-located-from-within-the-script
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
@@ -30,12 +32,13 @@ fi
 echo -n "[!] Generating 'ks-${HOSTNAME}.cfg' from template... "
 cp "$SCRIPT_DIR/$TEMPLATENAME" "ks-${HOSTNAME}.cfg"
 sed -i "s/THISHOSTNAME/${HOSTNAME}-kvm/" "ks-${HOSTNAME}.cfg"
+sed -i "s/THISSUBNET/${SUBNETNAME}/" "ks-${HOSTNAME}.cfg"
 echo "done!"
 
-echo -en "Enter 1st interface IP address: "
-read IPADDR1
-echo -en "Enter 2nd interface IP address: "
-read IPADDR2
+read -p "Enter 1st interface IP address (e.g. 198.51.100.117): " IPADDR1
+IPADDR1=${IPADDR1:-198.51.100.117}
+read -p "Enter 2nd interface IP address (e.g. 192.0.2.117): " IPADDR2
+IPADDR2=${IPADDR2:-192.0.2.117}
 
 echo -n "[!] Customizing 1st interface... "
 sed -i "s/THISIPADDR1/${IPADDR1}/" "ks-${HOSTNAME}.cfg"
