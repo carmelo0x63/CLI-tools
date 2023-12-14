@@ -7,7 +7,7 @@
 
 # Settings
 PREFIX="59"
-VNCPORT="10"
+VNCPORT="__VNCPORT__"
 VNCEXE="Xtightvnc"
 
 echo "Currently open connections:"
