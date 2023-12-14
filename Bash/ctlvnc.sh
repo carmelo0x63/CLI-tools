@@ -14,7 +14,7 @@ VNCEXE="Xtightvnc"
 echo "Currently open connections:"
 echo
 echo $SEPARATOR
-ps -efwww | grep $VNCEXE | awk '{ for(i=1; i<=NF; i++) { tmp = match($i, /590[0-9]/); if (tmp) { print " process = " $8 "\t port = " $i "\t PID = " $2 } } }'
+ps -efwww | grep $VNCEXE | awk '{ for(i=1; i<=NF; i++) { tmp = match($i, /59[0-9][0-9]/); if (tmp) { print " process = " $8 "\t port = " $i "\t PID = " $2 } } }'
 echo $SEPARATOR
 echo
 echo "Available resolutions, please choose:"
