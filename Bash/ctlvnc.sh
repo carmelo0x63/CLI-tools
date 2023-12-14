@@ -6,16 +6,13 @@
 #  2023-12-14: Stable release
 
 # Settings
-SEPARATOR="====================================================="
-PREFIX="590"
-VNCPORT="__VNCPORT__"
+PREFIX="59"
+VNCPORT="10"
 VNCEXE="Xtightvnc"
 
 echo "Currently open connections:"
-echo
-echo $SEPARATOR
-ps -efwww | grep $VNCEXE | awk '{ for(i=1; i<=NF; i++) { tmp = match($i, /59[0-9][0-9]/); if (tmp) { print " process = " $8 "\t port = " $i "\t PID = " $2 } } }'
-echo $SEPARATOR
+echo -n "[+] "
+ps -efwww | grep $VNCEXE | awk '{ for(i=1; i<=NF; i++) { tmp = match($i, /59[0-9][0-9]/); if (tmp) { print "process = " $8 "  port = " $i "  PID = " $2 } } }'
 echo
 echo "Available resolutions, please choose:"
 echo "1) 1400x1004 on port "$PREFIX$VNCPORT
