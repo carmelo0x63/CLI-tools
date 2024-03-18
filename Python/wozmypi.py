@@ -20,7 +20,7 @@ import sys                             # system-specific parameters and function
 
 # Global settings
 __version__ = '2.3'
-__build__ = '20220115'
+__build__ = '20240318'
 
 PiFlavours = [
   {'revision':'Beta','date':'Q1 2012','model':'B (Beta)','pcb':'?','mem':'256 MB','notes':'Beta Board'},

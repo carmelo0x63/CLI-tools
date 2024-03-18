@@ -19,7 +19,7 @@ import sys           # System-specific parameters and functions
 
 # Global variables
 __version__ = '1.3.2'
-__build__ = '20230516'
+__build__ = '20240318'
 CFGFILE = os.path.abspath(os.path.dirname(__file__)) + '/hhs2.json'
 
 # https://svn.blender.org/svnroot/bf-blender/trunk/blender/build_files/scons/tools/

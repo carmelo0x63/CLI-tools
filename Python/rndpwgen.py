@@ -3,6 +3,7 @@
 # author: Carmelo C
 # email: carmelo.califano@gmail.com
 # history, date format ISO 8601:
+#  2024-03-18 3.1 Added a verbose/debug argument
 #  2020-04-05 3.0 Refactored to Python3
 #  2017-01-17 2.4 added ability to remove some characters from the original strings
 #  2016-09-26 2.3 added an "owasp" and a "safe" option
@@ -18,8 +19,8 @@ import random    # Generate pseudo-random numbers
 import sys       # System-specific parameters and functions
 
 # Version number
-__version__ = "3.0"
-__build__ = "20200403"
+__version__ = "3.1"
+__build__ = "20240318"
 
 # Here we build the string of allowed characters
 # as "a-z" + "A-Z" + "0-9", length = 62
