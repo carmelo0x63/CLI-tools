@@ -18,8 +18,8 @@ import subprocess    # Subprocess management
 import sys           # System-specific parameters and functions
 
 # Global variables
-__version__ = "1.3.2"
-__build__ = "20230516"
+__version__ = '1.3.2'
+__build__ = '20230516'
 CFGFILE = os.path.abspath(os.path.dirname(__file__)) + '/hhs2.json'
 
 # https://svn.blender.org/svnroot/bf-blender/trunk/blender/build_files/scons/tools/
@@ -73,10 +73,10 @@ def iterate(mode):
 
 
 def main():
-    parser = argparse.ArgumentParser(description='HomeHostS2: pings a list of hosts to check their up/down status, version ' + __version__ + ', build ' + __build__ + '.')
-    parser.add_argument('-p', '--ping', action='store_true', help='Ping (ICMP) hosts')
-    parser.add_argument('-t', '--tcp', action='store_true', help='TCP scan on configurable port(s)')
-    parser.add_argument('-v', '--version', action='version', version='%(prog)s ' + __version__)
+    parser = argparse.ArgumentParser(description = 'HomeHostS2: pings a list of hosts to check their up/down status, version ' + __version__ + ', build ' + __build__ + '.')
+    parser.add_argument('-p', '--ping', action = 'store_true', help = 'Ping (ICMP) hosts')
+    parser.add_argument('-t', '--tcp', action = 'store_true', help = 'TCP scan on configurable port(s)')
+    parser.add_argument('-V', '--version', action = 'version', version = '%(prog)s ' + __version__)
 
     # In case of no arguments print help message then exits
     if len(sys.argv) == 1:

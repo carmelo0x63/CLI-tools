@@ -12,8 +12,8 @@ import email        # An email and MIME handling package
 import sys          # System-specific parameters and functions
 
 # Version number
-__version__ = "1.1"
-__build__ = "20230920"
+__version__ = '1.1'
+__build__ = '20240318'
 
 # Global variables
 BASICHEADERS = ['Delivered-To', 'Return-Path', 'From', 'Reply-To', 'To', 'Subject', 'Date']
@@ -41,7 +41,7 @@ def parseAllHeaders(msg):
 def main():
     parser = argparse.ArgumentParser(description='Scans .eml files for headers and info, summarizes important info, version ' + __version__ + ', build ' + __build__ + '.')
     parser.add_argument('fileName', metavar = '<File name>', type = str, help = 'Path to filename to be parsed')
-    parser.add_argument('-v', '--version', action = 'version', version = '%(prog)s ' + __version__)
+    parser.add_argument('-V', '--version', action = 'version', version = '%(prog)s ' + __version__)
     group = parser.add_mutually_exclusive_group()
     group.add_argument('-a', '--all', action = 'store_true', help = 'Shows all headers')
     group.add_argument('-b', '--basic', action = 'store_true', help = 'Shows essential info')

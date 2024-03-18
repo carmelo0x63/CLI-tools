@@ -11,8 +11,8 @@ import ipaddress
 import sys
 
 # Version number
-__version__ = "1.1"
-__build__ = "20200420"
+__version__ = '1.1'
+__build__ = '20240318'
 
 def ipdecode(subnet):
     try:
@@ -25,12 +25,12 @@ def ipdecode(subnet):
     print("Mask:      " + str(ipif.netmask))
     print("CIDR:      " + str(ipif.network).split('/')[1])
     print("Network:   " + str(ipif.network).split('/')[0])
-    print("Broadcast: " + str(ipif.network.broadcast_address), end='\n\n')
+    print("Broadcast: " + str(ipif.network.broadcast_address), end = '\n\n')
 
 def main():
-    parser = argparse.ArgumentParser(description='Calculates IP subnet from <ip_addr>/<mask>, version ' + __version__ + ', build ' + __build__ + '.')
-    parser.add_argument('subnet', metavar='<subnet>', type=str, help='Subnet either in CIDR (e.g. 192.168.1.0/24) or subnet mask (e.g. 192.168.1.0/255.255.255.0) format')
-    parser.add_argument('-v', '--version', action='version', version='%(prog)s ' + __version__)
+    parser = argparse.ArgumentParser(description = 'Calculates IP subnet from <ip_addr>/<mask>, version ' + __version__ + ', build ' + __build__ + '.')
+    parser.add_argument('subnet', metavar = '<subnet>', type = str, help = 'Subnet either in CIDR (e.g. 192.168.1.0/24) or subnet mask (e.g. 192.168.1.0/255.255.255.0) format')
+    parser.add_argument('-V', '--version', action = 'version', version = '%(prog)s ' + __version__)
 
     # In case of no arguments print help message then exit
     if len(sys.argv) == 1:

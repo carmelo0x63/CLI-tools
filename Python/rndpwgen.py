@@ -22,22 +22,24 @@ __version__ = "3.0"
 __build__ = "20200403"
 
 # Here we build the string of allowed characters
-# as "a-z" + "A-Z" + "0-9"
+# as "a-z" + "A-Z" + "0-9", length = 62
 alphaChars = string.ascii_letters + string.digits
-# as "a-z" + "A-Z" + "0-9" + "safe" special characters
+# as "a-z" + "A-Z" + "0-9" + "safe" special characters, length = 72
 safeChars = string.ascii_letters + string.digits + '!@#$%^&*()'
-# https://www.owasp.org/index.php/Password_special_characters
-owaspChars = string.ascii_letters + string.digits + '!"#$%&()*+,-./:;<=>?@[\]^_`{|}~'
+# https://www.owasp.org/index.php/Password_special_characters, length = 93
+owaspChars = string.ascii_letters + string.digits + r'!"#$%&()*+,-./:;<=>?@[\]^_`{|}~'
 # Minimum length for the final password
 minLen = 3
 
+
 def main():
-    parser = argparse.ArgumentParser(description='Generate random password, version ' + __version__ + ', build ' + __build__ + '.')
-    parser.add_argument('pwLen', metavar='<password length>', type=int, help='Integer number, must be 3(!) or more')
-    parser.add_argument('-a', '--alpha', action='store_true', help='alphanumeric only')
-    parser.add_argument('-r', '--remove', help='list of characters to be skipped')
-    parser.add_argument('-s', '--safe', action='store_true', help='alphanumeric + "safe" special characters')
-    parser.add_argument('-v', '--version', action='version', version='%(prog)s ' + __version__)
+    parser = argparse.ArgumentParser(description = 'Generate random password, version ' + __version__ + ', build ' + __build__ + '.')
+    parser.add_argument('pwLen', metavar = '<password length>', type = int, help = 'Integer number, must be 3(!) or more')
+    parser.add_argument('-a', '--alpha', action = 'store_true', help = 'alphanumeric only')
+    parser.add_argument('-r', '--remove', help = 'list of characters to be skipped')
+    parser.add_argument('-s', '--safe', action = 'store_true', help = 'alphanumeric + "safe" special characters')
+    parser.add_argument('-v', '--verbose', action = 'store_true', help = 'outputs debug information')
+    parser.add_argument('-V', '--version', action = 'version', version = '%(prog)s ' + __version__)
 
     # In case of no arguments print help message then exit
     if len(sys.argv) == 1:
@@ -50,6 +52,10 @@ def main():
         print('[+] Password too short, exiting!')
         sys.exit(2)
 
+    # A global variable is instantiated in case of -v/--verbose argument
+    global IS_VERBOSE
+    IS_VERBOSE = args.verbose
+
     # Finally feed arguments to the actual random password generator
     if args.alpha:
         print(generate_password(args.pwLen, "a", args.remove))
@@ -57,6 +63,7 @@ def main():
         print(generate_password(args.pwLen, "s", args.remove))
     else:
         print(generate_password(args.pwLen, "", args.remove))
+
 
 # Actual random password generator, takes three arguments:
 # lenN: password length
@@ -75,12 +82,17 @@ def generate_password(lenN, flavour, remC):
 
     result = ''
 
-    if flavour == "a": # switch "-a" or "--alpha" present
+    if flavour == "a":        # switch "-a" or "--alpha" present
         pwChars = alphaChars
-    elif flavour == "s": # switch "-s" or "--safe" present
+    elif flavour == "s":      # switch "-s" or "--safe" present
         pwChars = safeChars
-    else: # no switches, full power
+    else:                     # no switches, full power
         pwChars = owaspChars
+
+    if IS_VERBOSE:
+        print(f'[+] chars : {pwChars}')
+        print(f'[+] length: {len(pwChars)}')
+        print(f'[+] mask  : {pwMask}')
 
     # If the characters-to-be-skipped string is not empty
     if remC:
@@ -94,7 +106,11 @@ def generate_password(lenN, flavour, remC):
         else: # truly random character
             result += random.choice(pwChars)
 
+    if IS_VERBOSE:
+        print(f'[+] pw len: {len(result)}')
+
     return result
+
 
 # Function parsing "snd" string and, if present, removes its characters from "fst"
 def rmChars(fst, snd):
@@ -104,6 +120,7 @@ def rmChars(fst, snd):
         if pos >= 0:
             newChars = ''.join(newChars[i] for i in range(len(newChars)) if i != pos)
     return newChars
+
 
 # Main function
 if __name__ == '__main__':

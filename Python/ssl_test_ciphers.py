@@ -16,8 +16,8 @@ import sys				# variables used or maintained by the interpreter and functions th
 from multiprocessing import Process
 
 # Version number
-__version__ = "2.0"
-__build__ = "20200403"
+__version__ = '2.0'
+__build__ = '20240318'
 EPILOG=' '
 
 # https://svn.blender.org/svnroot/bf-blender/trunk/blender/build_files/scons/tools/
@@ -61,10 +61,10 @@ def clientConnect(cipher, ipaddr, portn):
         print(bcolors.OKBLUE + '[+] ' + cipher + ' supported!!!' + bcolors.ENDC)
 
 def main():
-    parser = argparse.ArgumentParser(description='Scans <IP address>:<IP address> querying all the supported TLS ciphers, version ' + __version__ + ', build ' + __build__ + '.', epilog=EPILOG)
-    parser.add_argument('ipAdd', metavar='<IP address>', type=str, help='IP address of the host to scan for ciphers')
-    parser.add_argument('whichPort', metavar='<Port number>', type=str, help='Port number, usually equals 443')
-    parser.add_argument('-v', '--version', action='version', version='%(prog)s ' + __version__ + '')
+    parser = argparse.ArgumentParser(description = 'Scans <IP address>:<IP address> querying all the supported TLS ciphers, version ' + __version__ + ', build ' + __build__ + '.', epilog=EPILOG)
+    parser.add_argument('ipAdd', metavar = '<IP address>', type = str, help = 'IP address of the host to scan for ciphers')
+    parser.add_argument('whichPort', metavar = '<Port number>', type = str, help = 'Port number, usually equals 443')
+    parser.add_argument('-V', '--version', action = 'version', version = '%(prog)s ' + __version__ + '')
 
     # In case of no arguments print help message then exits
     if len(sys.argv) == 1:

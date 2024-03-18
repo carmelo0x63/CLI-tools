@@ -11,14 +11,14 @@
 import argparse, json, subprocess, sys
 
 # Version number
-__version__ = "1.3"
-__build__ = "20220721"
+__version__ = '1.3'
+__build__ = '20240318'
 
 def main():
-    parser = argparse.ArgumentParser(description='Queries GitHub API returning any repositories owned by <GitHub user name>, version ' + __version__ + ', build ' + __build__ + '.')
-    parser.add_argument('username', metavar='<GitHub user name>', type=str)
-    parser.add_argument('-q', '--quiet', action='store_true', help='Quiet mode, shows a list containing the repositories\' names')
-    parser.add_argument('-v', '--version', action='version', version='%(prog)s ' + __version__)
+    parser = argparse.ArgumentParser(description = 'Queries GitHub API returning any repositories owned by <GitHub user name>, version ' + __version__ + ', build ' + __build__ + '.')
+    parser.add_argument('username', metavar = '<GitHub user name>', type = str)
+    parser.add_argument('-q', '--quiet', action = 'store_true', help = 'Quiet mode, shows a list containing the repositories\' names')
+    parser.add_argument('-V', '--version', action = 'version', version = '%(prog)s ' + __version__)
 
     # In case of no arguments print help message then exits
     if len(sys.argv) == 1:
