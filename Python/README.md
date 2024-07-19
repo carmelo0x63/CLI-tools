@@ -1,8 +1,39 @@
 Python tools:
+- hhs2.py
+- ipv4pingsweep.py
 - git_repos.py
 - rndpwgen.py
 - ssl_test_ciphers.py
 
+
+```
+./hhs2.py -h
+usage: hhs2.py [-h] [-p] [-t] [-V]
+
+HomeHostS2: pings a list of hosts to check their up/down status, version 1.3.2, build 20240318.
+
+options:
+  -h, --help     show this help message and exit
+  -p, --ping     Ping (ICMP) hosts
+  -t, --tcp      TCP scan on configurable port(s)
+  -V, --version  show program's version number and exit
+```
+
+```
+./ipv4pingsweep.py -h                                                                                                                                                                                                              10 ↵
+usage: ipv4pingsweep.py [-h] [-s <subnet>] [-t <threads>] [-v] [-V]
+
+IPv4 ping/ICMP sweeper, version 1.3, build 20240719.
+
+options:
+  -h, --help            show this help message and exit
+  -s <subnet>, --subnet <subnet>
+                        subnet as aa.bb.cc.dd/xx, in case of no subnet mask xx = 32
+  -t <threads>, --threads <threads>
+                        number of threads (default = 20)
+  -v, --verbose         print extended information
+  -V, --version         show program's version number and exit
+```
 
 ```
 ./git_repos.py -h

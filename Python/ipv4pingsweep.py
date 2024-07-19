@@ -3,6 +3,7 @@
 # author: Carmelo C
 # email: carmelo.califano@gmail.com
 # history, date format ISO 8601:
+#  2024-07-19: 1.3 moved default threads into parser option
 #  2023-07-07: 1.2 UP/DOWN logic, replaced subprocess.Popen w/ subprocess.call
 #  2023-05-31: 1.1 improved UP/DOWN logic
 #  2022-07-10: 1.0 initial version
@@ -23,8 +24,8 @@ ICMPCOUNT = '1'
 ICMPWAIT = '1'
 
 # Version number
-__version__ = '1.2'
-__build__ = '20230708'
+__version__ = '1.3'
+__build__ = '20240719'
 
 
 # https://svn.blender.org/svnroot/bf-blender/trunk/blender/build_files/scons/tools/
@@ -53,14 +54,13 @@ def send_ping(target):
             print(bcolors.OKGREEN + '[+]' + bcolors.ENDC + f' {target} is UP')
         else:
             if IS_VERBOSE:
-#                print(f'[-] {target} is DOWN')
-                print(bcolors.FAIL + '[-]' + bcolors.ENDC + f' {target} is UP')
+                print(bcolors.FAIL + '[-]' + bcolors.ENDC + f' {target} is DOWN')
 
 
 def main():
     parser = argparse.ArgumentParser(description='IPv4 ping/ICMP sweeper, version ' + __version__ + ', build ' + __build__ + '.')
     parser.add_argument('-s', '--subnet', metavar = '<subnet>', type = str, help = 'subnet as aa.bb.cc.dd/xx, in case of no subnet mask xx = 32')
-    parser.add_argument('-t', '--threads', metavar = '<threads>', type = int, help = 'number of threads (default = 10)')
+    parser.add_argument('-t', '--threads', metavar = '<threads>', type = int, default = 20, help = 'number of threads (default = 20)')
     parser.add_argument('-v', '--verbose', action = 'store_true', help = 'print extended information')
     parser.add_argument('-V', '--version', action = 'version', version = '%(prog)s ' + __version__)
 
@@ -91,11 +91,11 @@ def main():
         sys.exit(20)  # ERROR: input must be an IPv4 subnet
 
     # The number of threads is set to a safe value, 10, but can be changed from command-line
-    threads = 10
-    if(args.threads):
-        threads = args.threads
+#    threads = 10
+#    if(args.threads):
+#        threads = args.threads
 
-    for r in range(threads):
+    for r in range(args.threads):
         t = threading.Thread(target = worker)
         t.daemon = True
         t.start()
