@@ -6,5 +6,5 @@ Some examples:<br/>
 - Python
   - `rndpwgen.py`: a random password generator
   - `wozmypi.py`: Raspberry Pi's revision number, release date, model, PCB revision, RAM size
-  - `ipcalc3.py`: calculate IP subnets
+  - `ipcalc3.py`: calculate IPv4 and IPv6 subnets
 
