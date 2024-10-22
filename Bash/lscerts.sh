@@ -6,6 +6,7 @@
 # author: Carmelo C
 # email: carmelo.califano@gmail.com
 # history, date format ISO 8601:
+#  2024-10-22: Info displayed: issuer, subject, velidity: not before/not after
 #  2023-11-10: Added a fix to remove trailing "/" if present in CERTDIR
 #  2023-10-19: Hardcoded target directory replaced with input argument
 #  2023-10-12: First release
@@ -15,7 +16,7 @@
 #set -x
 
 # Settings
-VERSION="1.2"
+VERSION="1.3"
 EXTLIST=(pem crt)
 
 # ANSI colors
@@ -46,7 +47,7 @@ listcerts() {
         for CERT in "${CERTDIR}/"*"${1}"; do
             [ -f "$CERT" ] || continue
             echo -e "${GREEN}[+]${NC} $CERT"
-            openssl x509 -in "${CERT}" -text -noout | egrep "Issuer:|Subject:"
+            openssl x509 -in "${CERT}" -text -noout | egrep "Issuer:|Subject:|Validity|Not Before:|Not After :"
             if [ "$VERBOSE" -gt 0 ]; then
                 openssl x509 -in "${CERT}" -text -noout | egrep -A1 "X509v3" | egrep -v "^\-\-"
                 echo -e "\n"
