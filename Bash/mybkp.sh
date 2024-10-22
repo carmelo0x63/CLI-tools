@@ -3,6 +3,7 @@
 # author: Carmelo C
 # email: carmelo.califano@gmail.com
 # history, date format ISO 8601:
+#  2024-10-22: Added `Private CA`
 #  2023-01-07: Added `pass` data (https://www.passwordstore.org/)
 #  2022-10-06: Added GPG data
 #  2021-04-19: Added kubeconfig
@@ -31,7 +32,10 @@ FILES=(\.zshrc \.zsh_history
        \.Xresources \.vnc/xstartup /usr/bin/vncserver
        \.config/conky/conky.conf)
 # Directories, relative to $HOME
-DIRS=(scripts \.ssh \.rsync \.gnupg \.password-store \.oh-my-zsh/custom KVM YAML HCL)
+DIRS=(scripts \.ssh \.rsync \.gnupg
+      \.password-store \.oh-my-zsh/custom
+      KVM YAML HCL
+      Private\ CA)
 
 # Colors, ANSI escape codes
 # source: https://stackoverflow.com/questions/5947742/how-to-change-the-output-color-of-echo-in-linux
