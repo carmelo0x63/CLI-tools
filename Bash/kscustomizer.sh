@@ -9,7 +9,7 @@
 
 TEMPLATENAME="ks-template-v9.tmpl"
 DESTDIR="$HOME/KVM"
-SUBNETNAME="c2.homelab.test"
+SUBNETNAME="homenet.lan.internal"
 # source: https://stackoverflow.com/questions/59895/how-do-i-get-the-directory-where-a-bash-script-is-located-from-within-the-script
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
