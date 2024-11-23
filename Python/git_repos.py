@@ -3,10 +3,10 @@
 # author: Carmelo C
 # email: carmelo.califano@gmail.com
 # history, date format ISO 8601:
-#  2022-07-21: 1.3 output re-formatted: q/quiet = list, otherwise the output will be vertical with numbers
-#  2021-01-14: 1.2 module "requests" removed, no dependencies other than Python standard library
-#  2020-04-05: 1.1 added argparse, quiet mode
-#  2020-01-03: 1.0 initial version
+#   2022-07-21: 1.3 output re-formatted: q/quiet = list, otherwise the output will be vertical with numbers
+#   2021-01-14: 1.2 module "requests" removed, no dependencies other than Python standard library
+#   2020-04-05: 1.1 added argparse, quiet mode
+#   2020-01-03: 1.0 initial version
 
 import argparse, json, subprocess, sys
 

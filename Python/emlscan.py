@@ -2,9 +2,9 @@
 # Scans .eml files for headers and info, summarizes important info
 # author: Carmelo C
 # email: carmelo.califano@gmail.com
-# history:
-#  2023-09-20: 1.1 output column-formatted and cleaned-up
-#  2023-03-08: 1.0 initial version
+# history, date format ISO 8601:
+#   2023-09-20: 1.1 output column-formatted and cleaned-up
+#   2023-03-08: 1.0 initial version
 
 # Import some modules
 import argparse     # Parser for command-line options, arguments and sub-commands

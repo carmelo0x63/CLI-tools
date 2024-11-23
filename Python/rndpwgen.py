@@ -3,14 +3,14 @@
 # author: Carmelo C
 # email: carmelo.califano@gmail.com
 # history, date format ISO 8601:
-#  2024-03-18 3.1 Added a verbose/debug argument
-#  2020-04-05 3.0 Refactored to Python3
-#  2017-01-17 2.4 added ability to remove some characters from the original strings
-#  2016-09-26 2.3 added an "owasp" and a "safe" option
-#  2.2 added constraint to include at least one Capital letter + one Numeric char
-#  2.1 added "-a" to generate aplhanumeric-only passwords
-#  2.0 variable length passwords
-#  1.0 initial version
+#   2024-03-18 3.1 Added a verbose/debug argument
+#   2020-04-05 3.0 Refactored to Python3
+#   2017-01-17 2.4 added ability to remove some characters from the original strings
+#   2016-09-26 2.3 added an "owasp" and a "safe" option
+#   2.2 added constraint to include at least one Capital letter + one Numeric char
+#   2.1 added "-a" to generate aplhanumeric-only passwords
+#   2.0 variable length passwords
+#   1.0 initial version
 
 # Import some modules
 import string    # Common string operations

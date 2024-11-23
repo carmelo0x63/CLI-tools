@@ -2,9 +2,9 @@
 # Subnet scanner for open ports
 # author: Carmelo C
 # email: carmelo.califano@gmail.com
-# history:
-#  1.1: Small improvement to argument parsing
-#  1.0: First version
+# history, date format ISO 8601:
+#   1.1: Small improvement to argument parsing
+#   1.0: First version
 
 import argparse
 import ipaddress

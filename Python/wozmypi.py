@@ -3,14 +3,14 @@
 # Source info: https://elinux.org/RPi_HardwareHistory
 # author: Carmelo C
 # email: carmelo.califano@gmail.com
-# history:
-#  2.3 Extracting "Model" from /proc/cpuinfo
-#  2.2 Updated: list of Pi flavours
-#  2.1 Added: try/except to handle running on non-Linux platforms
-#  2.0 added: CPU count, frequency
-#  1.2 replaced split with rstrip, moved to Python 3
-#  1.1 added argparse module and functionalities
-#  1.0 initial version
+# history, date format ISO 8601:
+#   2.3 Extracting "Model" from /proc/cpuinfo
+#   2.2 Updated: list of Pi flavours
+#   2.1 Added: try/except to handle running on non-Linux platforms
+#   2.0 added: CPU count, frequency
+#   1.2 replaced split with rstrip, moved to Python 3
+#   1.1 added argparse module and functionalities
+#   1.0 initial version
 
 # Import some modules
 from __future__ import print_function  # print() as a function not as a statement

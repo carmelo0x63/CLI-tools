@@ -2,8 +2,8 @@
 # The ultimate tool to download missing tools 
 # author: Carmelo C
 # email: carmelo.califano@gmail.com
-# history:
-#  1.0: First version: Golang, Terraform, docker-compose
+# history, date format ISO 8601:
+#   1.0: First version: Golang, Terraform, docker-compose
 
 import os
 

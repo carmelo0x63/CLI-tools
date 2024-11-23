@@ -3,10 +3,10 @@
 # author: Carmelo C
 # email: carmelo.califano@gmail.com
 # history, date format ISO 8601:
-#  2024-07-19: 1.3 moved default threads into parser option
-#  2023-07-07: 1.2 UP/DOWN logic, replaced subprocess.Popen w/ subprocess.call
-#  2023-05-31: 1.1 improved UP/DOWN logic
-#  2022-07-10: 1.0 initial version
+#   2024-07-19: 1.3 moved default threads into parser option
+#   2023-07-07: 1.2 UP/DOWN logic, replaced subprocess.Popen w/ subprocess.call
+#   2023-05-31: 1.1 improved UP/DOWN logic
+#   2022-07-10: 1.0 initial version
 # Adapted from: https://github.com/gh0x0st/python3_multithreading
 # Useful link(s): https://gist.github.com/sourceperl/10288663
 

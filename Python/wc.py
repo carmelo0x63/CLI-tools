@@ -2,7 +2,7 @@
 # Personal version of wc written in Python
 # source: https://github.com/mellowiz/wcPython
 # history, date format ISO 8601:
-#  2018-01-11 1.0 initial version
+#   2018-01-11 1.0 initial version
 
 from __future__ import print_function	# future statement definitions
 import argparse				# Parser for command-line options, arguments and sub-commands
