@@ -1,0 +1,1 @@
+{"server0": {"idx": 0, "port": 8080, "name": "employees.org", "key": "carmelo-employees", "user": "carmelo"}, "server1": {"idx": 1, "port": 9090, "name": "tty.sdf.org", "key": "carmelo-sdf", "user": "carmelo"}}
