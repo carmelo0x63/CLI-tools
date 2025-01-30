@@ -9,7 +9,7 @@
 
 # Settings
 PREFIX="590"
-VNCPORT="9"
+VNCPORT="__VNCPORT__"
 VNCEXE="vnc"
 
 echo "Currently open connections:"
