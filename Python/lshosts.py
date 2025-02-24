@@ -20,6 +20,7 @@
 # Import necessary modules
 import argparse               # Command-line parsing library
 import json                   # JSON encoder and decoder
+import os                     # Miscellaneous operating system interfaces
 import re                     # Support for regular expressions (RE)
 import sys                    # System-specific parameters and functions
 
@@ -28,7 +29,7 @@ import sys                    # System-specific parameters and functions
 __version__ = '3.1'
 __build__ = '20250224'
 LOCALHOSTS = '/etc/hosts'
-CONFIG = 'lshosts.json'
+CONFIG = os.path.abspath(os.path.dirname(__file__)) + '/lshosts.json'
 HOSTS = []
 
 def readConf():
