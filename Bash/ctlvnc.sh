@@ -8,7 +8,7 @@
 #  2023-12-14: Stable release
 
 # Settings
-PREFIX="590"
+PREFIX="59"
 VNCPORT="__VNCPORT__"
 VNCEXE="vnc"
 
