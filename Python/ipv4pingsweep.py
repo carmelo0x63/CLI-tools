@@ -3,6 +3,7 @@
 # author: Carmelo C
 # email: carmelo.califano@gmail.com
 # history, date format ISO 8601:
+#   2025-05-08: 1.4 added IP-to-name conversion
 #   2024-07-19: 1.3 moved default threads into parser option
 #   2023-07-07: 1.2 UP/DOWN logic, replaced subprocess.Popen w/ subprocess.call
 #   2023-05-31: 1.1 improved UP/DOWN logic
@@ -22,10 +23,11 @@ import time             # Time access and conversions
 # Settings
 ICMPCOUNT = '1'
 ICMPWAIT = '1'
+HOSTS_FILE = '/etc/hosts'
 
 # Version number
-__version__ = '1.3'
-__build__ = '20240719'
+__version__ = '1.4'
+__build__ = '20250508'
 
 
 # https://svn.blender.org/svnroot/bf-blender/trunk/blender/build_files/scons/tools/
@@ -43,15 +45,28 @@ class bcolors:
 def worker():
     while True:
         target = q.get()
-        send_ping(target)
+        send_ping(str(target))
         q.task_done()
 
 
+def get_hostname(target):
+    hostname = target
+    for host in HOSTS_LIST:
+        if not host.startswith("#") and target in host:
+            hostname = host.split('\t')[1].rstrip()
+
+    return(hostname)
+
+
 def send_ping(target):
-    icmp_response = subprocess.call(['ping', '-c', ICMPCOUNT, '-W', ICMPWAIT, str(target)], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+    icmp_response = subprocess.call(['ping', '-c', ICMPCOUNT, '-W', ICMPWAIT, target], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
     with thread_lock:
         if icmp_response == 0: 
-            print(bcolors.OKGREEN + '[+]' + bcolors.ENDC + f' {target} is UP')
+            if IS_NAME:
+                target_name = get_hostname(target)
+                print(bcolors.OKGREEN + '[+]' + bcolors.ENDC + f' {target_name} is UP')
+            else:
+                print(bcolors.OKGREEN + '[+]' + bcolors.ENDC + f' {target} is UP')
         else:
             if IS_VERBOSE:
                 print(bcolors.FAIL + '[-]' + bcolors.ENDC + f' {target} is DOWN')
@@ -59,6 +74,7 @@ def send_ping(target):
 
 def main():
     parser = argparse.ArgumentParser(description='IPv4 ping/ICMP sweeper, version ' + __version__ + ', build ' + __build__ + '.')
+    parser.add_argument('-n', '--name', action = 'store_true', help = 'IP-to-name conversion')
     parser.add_argument('-s', '--subnet', metavar = '<subnet>', type = str, help = 'subnet as aa.bb.cc.dd/xx, in case of no subnet mask xx = 32')
     parser.add_argument('-t', '--threads', metavar = '<threads>', type = int, default = 20, help = 'number of threads (default = 20)')
     parser.add_argument('-v', '--verbose', action = 'store_true', help = 'print extended information')
@@ -74,6 +90,14 @@ def main():
     # A global variable is instantiated in case of -v/--verbose argument
     global IS_VERBOSE
     IS_VERBOSE = args.verbose
+
+    # A global variable is instantiated in case of -n/--name argument
+    global IS_NAME
+    IS_NAME = args.name
+    if IS_NAME:
+        with open(HOSTS_FILE) as f:
+            global HOSTS_LIST
+            HOSTS_LIST = f.readlines()
 
     # "subnet" is parsed from input and validated with "ipaddress"
     if args.subnet:
@@ -108,7 +132,7 @@ def main():
     if IS_VERBOSE:
         print(f'[!] Creating a task request for each host in {subnet_valid}')
 
-    # send ten task requests to the worker
+    # send task requests to the worker
     for item in all_hosts:
         q.put(item)
 
