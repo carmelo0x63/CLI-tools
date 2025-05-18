@@ -3,6 +3,7 @@
 # author: Carmelo C
 # email: carmelo.califano@gmail.com
 # history, date format ISO 8601:
+#  2025-05-18: Added `.gitconfig`
 #  2024-10-22: Added `Private CA`
 #  2023-01-07: Added `pass` data (https://www.passwordstore.org/)
 #  2022-10-06: Added GPG data
@@ -15,13 +16,15 @@
 #  2020-04-06: Entirely rewritten by moving files -> array
 
 # Settings
+#set -Eeuo pipefail
+#set -x
 DESTDIR="/tmp"
 HOSTNAME=$(hostname -s)
 DATE=$(date "+%Y%m%d")
 LABEL="LABEL"
 OUTFILE="$DESTDIR""/""$HOSTNAME""_""$USER""_""$LABEL""_bkp-""$DATE"
 # Individual files, full path
-FILES=(\.zshrc \.zsh_history
+FILES=(\.zshrc \.zsh_history \.gitconfig
        \.bashrc \.profile \.bash_history
        \.vimrc \.screenrc \.sqliterc
        \.kube/config
@@ -47,7 +50,6 @@ PURPLE="\033[0;35m"
 CYAN="\033[0;36m"
 NC="\033[0m"         # No Color
 
-#set -x
 
 archive() {
     if [ -e "$1" ]; then
@@ -57,6 +59,7 @@ archive() {
         echo -e "${BLUE}[+]${NC} Skipping file $1..."
     fi
 }
+
 
 echo "+----------------------------------------------------------+"
 echo "| Backing up your personal files and settings"
