@@ -33,7 +33,7 @@ for FILE in "$DIR"/*; do
 
     basename_file=$(get_basename "$FILE")
 
-    if [ "${basename_file%.*}" = "known_hosts" ] || [ "$basename_file" = "config" ] || [ "$basename_file" = "authorized_hosts" ]; then
+    if [[ "${basename_file}" == known_hosts* ]] || [ "${basename_file}" = "config" ] || [[ "${basename_file}" == authorized_keys* ]]; then
         continue
     fi
 
