@@ -1,5 +1,5 @@
-#!/bin/bash
-# Script to bring up/down Wireguard VPN on Linux PC using nmcli
+#!/usr/bin/env bash
+# Script to bring up/down Wireguard VPN on Linux (nmcli) and BSD (ifconfig)
 # author: Carmelo C
 # email: carmelo.califano@gmail.com
 # history, date format ISO 8601:
@@ -8,9 +8,11 @@
 # Settings
 WG_DIR="/etc/wireguard"
 WG_CONF="$WG_DIR/wg0.conf"
+WG_IFACE="wg0"
 REQUIRED_DIR_PERM="700"
 REQUIRED_FILE_PERM="600"
 OWNER="root"
+OS_TYPE=""
 
 show_help() {
     echo "Usage: $0 {-up|-down|-help|-version}"
@@ -18,6 +20,26 @@ show_help() {
     echo "  -down    - Bring down the Wireguard VPN"
     echo "  -help    - Show this help message"
     echo "  -version - Show script version"
+    echo "Supported OS: Linux, BSD"
+}
+
+detect_os() {
+    local os_name
+    os_name="$(uname -s)"
+
+    case "$os_name" in
+        Linux)
+            OS_TYPE="Linux"
+            ;;
+        FreeBSD|OpenBSD|NetBSD|DragonFly)
+            OS_TYPE="BSD"
+            ;;
+        *)
+            echo "Unsupported OS: $os_name"
+            echo "Only Linux and BSD are supported."
+            exit 1
+            ;;
+    esac
 }
 
 check_root() {
@@ -94,11 +116,12 @@ check_and_fix_file() {
 }
 
 version() {
-    echo "Wireguard VPN control script version 1.0"
+    echo "Wireguard VPN control script version 1.1"
 }
 
 main() {
     check_root
+    detect_os
 
     if [ $# -eq 0 ]; then
         show_help
@@ -113,17 +136,27 @@ main() {
             version
             ;;
         -up|-down)
-            check_and_fix_dir
-            check_and_fix_file
+            if [ "$OS_TYPE" = "Linux" ]; then
+                check_and_fix_dir
+                check_and_fix_file
 
-            if [ "$1" = "-up" ]; then
-                echo "Bringing up Wireguard VPN..."
-                nmcli con import type wireguard file "$WG_CONF"
-                nmcli con up id wg0
+                if [ "$1" = "-up" ]; then
+                    echo "Bringing up Wireguard VPN on Linux..."
+                    nmcli con import type wireguard file "$WG_CONF"
+                    nmcli con up id "$WG_IFACE"
+                else
+                    echo "Bringing down Wireguard VPN on Linux..."
+                    nmcli con down id "$WG_IFACE"
+                    nmcli con del id "$WG_IFACE"
+                fi
             else
-                echo "Bringing down Wireguard VPN..."
-                nmcli con down id wg0
-                nmcli con del id wg0
+                if [ "$1" = "-up" ]; then
+                    echo "Bringing up Wireguard VPN on BSD..."
+                    ifconfig "$WG_IFACE" up
+                else
+                    echo "Bringing down Wireguard VPN on BSD..."
+                    ifconfig "$WG_IFACE" down
+                fi
             fi
             ;;
         *)
