@@ -116,7 +116,7 @@ main() {
             check_and_fix_dir
             check_and_fix_file
 
-            if [ "$1" = "up" ]; then
+            if [ "$1" = "-up" ]; then
                 echo "Bringing up Wireguard VPN..."
                 nmcli con import type wireguard file "$WG_CONF"
                 nmcli con up id wg0
