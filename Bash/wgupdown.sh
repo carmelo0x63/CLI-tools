@@ -1,7 +1,11 @@
 #!/bin/bash
-
 # Script to bring up/down Wireguard VPN on Linux PC using nmcli
+# author: Carmelo C
+# email: carmelo.califano@gmail.com
+# history, date format ISO 8601:
+#  2026-07-16: Initial release
 
+# Settings
 WG_DIR="/etc/wireguard"
 WG_CONF="$WG_DIR/wg0.conf"
 REQUIRED_DIR_PERM="700"
@@ -102,13 +106,13 @@ main() {
     fi
 
     case "$1" in
-        help)
+        -help)
             show_help
             ;;
-        version)
+        -version)
             version
             ;;
-        up|down)
+        -up|-down)
             check_and_fix_dir
             check_and_fix_file
 
