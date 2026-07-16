@@ -3,7 +3,8 @@
 # author: Carmelo C
 # email: carmelo.califano@gmail.com
 # history, date format ISO 8601:
-#  2026-07-16: Initial release
+#  2026-07-16: v.1.1, both Linux and BSD support, added status option, added permission checks
+#  2026-06-24: Initial release
 
 # Settings
 WG_DIR="/etc/wireguard"
@@ -18,6 +19,7 @@ show_help() {
     echo "Usage: $0 {-up|-down|-help|-version}"
     echo "  -up      - Bring up the Wireguard VPN"
     echo "  -down    - Bring down the Wireguard VPN"
+    echo "  -status  - Show the status of the Wireguard VPN"
     echo "  -help    - Show this help message"
     echo "  -version - Show script version"
     echo "Supported OS: Linux, BSD"
@@ -157,6 +159,13 @@ main() {
                     echo "Bringing down Wireguard VPN on BSD..."
                     ifconfig "$WG_IFACE" down
                 fi
+            fi
+            ;;
+        -status)
+            if [ "$OS_TYPE" = "Linux" ]; then
+                nmcli con sho dev "$WG_IFACE"
+            else
+                ifconfig "$WG_IFACE"
             fi
             ;;
         *)
