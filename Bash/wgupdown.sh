@@ -13,11 +13,11 @@ REQUIRED_FILE_PERM="600"
 OWNER="root"
 
 show_help() {
-    echo "Usage: $0 {up|down|help|version}"
-    echo "  up      - Bring up the Wireguard VPN"
-    echo "  down    - Bring down the Wireguard VPN"
-    echo "  help    - Show this help message"
-    echo "  version - Show script version"
+    echo "Usage: $0 {-up|-down|-help|-version}"
+    echo "  -up      - Bring up the Wireguard VPN"
+    echo "  -down    - Bring down the Wireguard VPN"
+    echo "  -help    - Show this help message"
+    echo "  -version - Show script version"
 }
 
 check_root() {
