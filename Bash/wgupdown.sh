@@ -163,7 +163,7 @@ main() {
             ;;
         -status)
             if [ "$OS_TYPE" = "Linux" ]; then
-                nmcli con sho dev "$WG_IFACE"
+                ip add sho dev "$WG_IFACE"
             else
                 ifconfig "$WG_IFACE"
             fi
